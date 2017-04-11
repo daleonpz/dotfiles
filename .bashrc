@@ -141,6 +141,7 @@ export PATH="$PATH:/home/dnl/MATLAB/R2013a/bin"
 export PATH="$PATH:/home/dnl/Documents/scripts"
 export PATH="/opt/android-build:/opt/jdk1.8.0_25/bin:$PATH"
 export EDITOR=vim
+export VISUAL="vim"
 
 # alias
 alias apagar='sudo shutdown -P now' 
@@ -151,6 +152,10 @@ alias gccWg='gcc -W -Wall -g3'
 alias valgdb='valgrind --vgdb-error=0'
 alias execjekyll='bundle exec jekyll serve'
 alias pdb2.7='python2.7 -m pdb'
+valpyPath="/home/dnl/Documents/gitStuff/Python-2.7.3"
+alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $valpyPath/bin/python2.7'
+alias addctags='ctags -R .'
+alias translate='trans -b'
 
 # functions
 mkcd () {

@@ -86,7 +86,7 @@ augroup END
 """"""""""""""""""""""""""""""""
 augroup vim_settings 
     set filetype=vim 
-    autocmd FileType vim nnoremap ,sec :-1read /home/dnl/.vim/vim/section_div.template<CR>j5li
+    autocmd FileType vim nnoremap <silent> ,sec :-1read /home/dnl/.vim/vim/section_div.template<CR>j5li
 augroup END 
 
 
@@ -96,7 +96,7 @@ augroup END
 augroup py_settings 
     set filetype=python
     autocmd!
-    autocmd FileType python nnoremap ,sec :-1read $HOME/.vim/python/section_div.template<CR>j5li
+    autocmd FileType python nnoremap <silent> ,sec :-1read $HOME/.vim/python/section_div.template<CR>j5li
 augroup END 
 
 
@@ -106,7 +106,7 @@ augroup END
 augroup c_settings 
     set filetype=c
     autocmd!
-    autocmd FileType c nnoremap ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
+    autocmd FileType c nnoremap <silent> ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
     "autocmd FileType c command SecDiv execute ":-1read $HOME/.vim/c/section_div.template<CR>j5wi"
 augroup END 
 
@@ -117,13 +117,18 @@ augroup END
 augroup cpp_settings 
     set filetype=cpp
     autocmd!
-    autocmd FileType cpp nnoremap ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
+    autocmd FileType cpp nnoremap <silent> ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
 augroup END
 
 
 """"""""""""""""""""""""""""""""
-"    COMMON      "
+"    MISC      "
 """"""""""""""""""""""""""""""""
+set keywordprg=trans\ -b 
+
+" repmap numpad to keyboard
+inoremap <silent> <C-l> <kEnter>
+
 augroup PatchDiffHighlight
     autocmd!
     autocmd BufEnter *.patch, *.ref, *.diff syntax enable
@@ -136,4 +141,5 @@ autocmd FileType conf,fstab       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
 autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType vim              let b:comment_leader = '" '
+noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
