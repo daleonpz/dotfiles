@@ -158,6 +158,14 @@ alias addctags='ctags -R .'
 alias translate='trans -b'
 
 # functions
+weekcal() {
+    calPath="/home/dnl/Documents/gitStuff/localStuff"
+    gcal -u -f $calPath/myown.cal --date-format='%1%Y %<3#U %>02*D, %>3w#K%2' -cdl@t7 --heading-text="Hello,_it_is_%K_,~%t__o'clock"   >  /tmp/caltemp
+
+    sed -e "s/<\(.*\)$/\x1b[01;32m&\x1b[0m/g"   /tmp/caltemp
+}
+
+
 mkcd () {
     mkdir -p "$*"
     cd "$*"
