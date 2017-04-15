@@ -1,0 +1,5 @@
+nnoremap <c-s-p> i<c-s-p>
+
+autocmd LocationChange .*                             js modes.passAllKeys = false
+autocmd LocationChange youtube\\.com          js modes.passAllKeys = true
+
