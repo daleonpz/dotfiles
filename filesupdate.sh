@@ -1,5 +1,7 @@
 #!/bin/bash
 
-\cp  ~/.bashrc .bashrc
+\cp ~/.bashrc .bashrc
+\cp ~/.vimperatorrc .vimperatorrc
 \cp /etc/vimrc .vimrc
 \cp /etc/inputrc .inputrc 
+
