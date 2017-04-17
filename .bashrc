@@ -159,10 +159,12 @@ alias translate='trans -b'
 
 # functions
 weekcal() {
-    calPath="/home/dnl/Documents/gitStuff/localStuff"
-    gcal -u -f $calPath/myown.cal --date-format='%1%Y %<3#U %>02*D, %>3w#K%2' -cdl@t7 --heading-text="Hello,_it_is_%K_,~%t__o'clock"   >  /tmp/caltemp
+    gcal
+    calPath="/home/dnl/Documents/localStuff"
+    gcal -u -f $calPath/myown.cal --date-format='%1%Y %<3#U %>02*D, %>3w#K%2' -cdl@t7 --heading-text="Time:_%t__o'clock"   >  /tmp/caltemp
 
-    sed -e "s/<\(.*\)$/\x1b[01;32m&\x1b[0m/g"   /tmp/caltemp
+#     sed -e "s/<\(.*\)$/\x1b[01;32m&\x1b[0m/g"   /tmp/caltemp
+    sed -e "s/<\(.*\)>/\x1b[01;32mTODAY/g" -e "s/TO\(.*\)$/&\x1b[0m/g"  -e "s/\(.*\!\)$/\x1b[01;31m&\x1b[0m/g" /tmp/caltemp
 }
 
 
