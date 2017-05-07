@@ -168,6 +168,14 @@ weekcal() {
 }
 
 
+opendocument(){
+    zathura "$*" &> /dev/null 
+}
+
+browser(){
+    firefox &> /dev/null
+}
+
 mkcd () {
     mkdir -p "$*"
     cd "$*"

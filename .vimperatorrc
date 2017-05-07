@@ -1,5 +1,4 @@
 nnoremap <c-s-p> i<c-s-p>
-nnoremap o :tabopen
 
 autocmd LocationChange .*                             js modes.passAllKeys = false
 autocmd LocationChange youtube\\.com          js modes.passAllKeys = true
