@@ -5,7 +5,7 @@ set history=100
 
 set timefmt=%m/%d\ %H:%M
 
-
+view 
 " Browse images in current directory with Feh
 filextype *.jpg,*.jpeg,*.png,*.gif
        \ {View in feh}

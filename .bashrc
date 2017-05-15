@@ -156,6 +156,8 @@ valpyPath="/home/dnl/Documents/gitStuff/Python-2.7.3"
 alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $valpyPath/bin/python2.7'
 alias addctags='ctags -R .'
 alias translate='trans -b'
+alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
+alias fjfirefox='firejail --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 
 # functions
 weekcal() {

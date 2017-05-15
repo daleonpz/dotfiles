@@ -6,6 +6,7 @@ set input-meta on
 set convert-meta off
 set output-meta on
 
+
 $if mode=emacs
 
 # for linux console and RH/Debian xterm
@@ -42,5 +43,4 @@ $if mode=emacs
 
 #Use [Tab] and [Shift]+[Tab] to cycle through all the possible completions:
 "\e[Z": menu-complete-backward
-
 $endif
