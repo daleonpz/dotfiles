@@ -4,6 +4,8 @@ fi
 
 xhost +local:root > /dev/null 2>&1
 
+set -o vi
+
 complete -cf sudo
 
 shopt -s cdspell
