@@ -23,11 +23,12 @@ pacman -S octopi
 pacman -S valgrind
 pacman -S tilda
 pacman -S wget  yaourt
-pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu
+pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
 
 # Packer
 # Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
 yaourt -S packer
+
 packer -S gcal
 
 
