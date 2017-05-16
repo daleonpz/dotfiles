@@ -24,6 +24,7 @@ pacman -S valgrind
 pacman -S tilda
 pacman -S wget  yaourt
 pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
+pacman -S downgrade
 
 # Packer
 # Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
