@@ -18,6 +18,9 @@ pacman -Syy
 pacman-optimize && sync
 
 
+# update
+pacman -Syyu
+
 ## basic programs
 pacman -S octopi
 pacman -S valgrind
@@ -48,6 +51,9 @@ sh restore_dotfiles.sh
 cd ~
 
 
+# install valgrind for python 
+# https://stackoverflow.com/questions/20112989/how-to-use-valgrind-with-python
+# https://github.com/enthought/Python-2.7.3
 
 ## in firefox
 # vimperator
