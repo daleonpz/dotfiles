@@ -28,13 +28,15 @@ pacman -S tilda
 pacman -S wget  yaourt
 pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
 pacman -S downgrade
+pacman -S emacs xournal
 
 # Packer
 # Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
 yaourt -S packer
 
 packer -S gcal
-
+packer -S texlive-most
+# packer -S texlive-lang # lang support
 
 
 ## git clones
@@ -54,6 +56,9 @@ cd ~
 # install valgrind for python 
 # https://stackoverflow.com/questions/20112989/how-to-use-valgrind-with-python
 # https://github.com/enthought/Python-2.7.3
+
+# install translator
+# https://github.com/soimort/translate-shell 
 
 ## in firefox
 # vimperator
