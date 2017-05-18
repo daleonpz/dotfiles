@@ -28,7 +28,7 @@ pacman -S tilda
 pacman -S wget  yaourt
 pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
 pacman -S downgrade
-pacman -S emacs xournal
+pacman -S emacs xournal pandoc
 
 # Packer
 # Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
@@ -45,6 +45,7 @@ cd ~/Documents/gitStuff/
 git clone git@github.com:daleonpz/dotfiles.git
 git clone git@github.com:daleonpz/dnl_tools.git
 git clone git@github.com:daleonpz/blog.git
+git clone git@github.com:daleonpz/Notes.git
 cd ~
 
 ## move dotfiles 
