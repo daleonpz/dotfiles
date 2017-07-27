@@ -5,3 +5,6 @@ bundle install
 
 # md terminal viewer
 gem install mdless
+
+# flashplugin
+packer -S flashplugin

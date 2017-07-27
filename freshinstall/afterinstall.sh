@@ -22,13 +22,14 @@ pacman-optimize && sync
 pacman -Syyu
 
 ## basic programs
+pacman -S gdb scope
 pacman -S octopi
 pacman -S valgrind
 pacman -S tilda
 pacman -S wget  yaourt
 pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
 pacman -S downgrade
-pacman -S emacs xournal pandoc
+pacman -S emacs xournal pandoc feh
 
 # Packer
 # Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
@@ -37,7 +38,8 @@ yaourt -S packer
 packer -S gcal
 packer -S texlive-most
 # packer -S texlive-lang # lang support
-
+packer -S transmission-cli
+packer -S transmission-qt
 
 ## git clones
 mkdir ~/Documents/gitStuff
