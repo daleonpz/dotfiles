@@ -124,7 +124,8 @@ augroup END
 """"""""""""""""""""""""""""""""
 "    MISC      "
 """"""""""""""""""""""""""""""""
-set keywordprg=trans\ -b 
+" set keywordprg=trans\ -b
+set keywordprg=trans\ =de 
 
 " repmap numpad to keyboard
 inoremap <silent> <C-l> <kEnter>
@@ -135,7 +136,7 @@ augroup PatchDiffHighlight
 augroup END
 
 " add comments
-autocmd FileType c,cpp,java,scala let b:comment_leader = '// '
+autocmd FileType c,cpp,java,scala,javascript let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
 autocmd FileType conf,fstab       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
@@ -144,10 +145,19 @@ autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
 
+" Switch to hex-editor`
+noremap <F8> :%!xxd<CR> 
+" Switch back 
+noremap <F7> :%!xxd -r<CR>
+
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
-nnoremap <silent> ,make :set makeprg=gcc\ -Wall\ -W\ -g\ %:t<CR> \| :make!<CR> \| :set makeprg=make<CR> \|:clist<CR>
+" nnoremap <silent> ,make :set makeprg=gcc\ -Wall\ -W\ -g\ %:t<CR> \| :make!<CR> \| :set makeprg=make<CR> \|:clist<CR>
+command! MakeGcc !gcc -Wall -W -g %
 
+command! MakeTags !ctags -R .
+
+command! Makepdf !pandoc -o %.pdf %
 
 

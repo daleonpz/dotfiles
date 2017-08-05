@@ -162,7 +162,7 @@ alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
 alias fjfirefox='firejail --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 
 # functions
-weekcal() {
+mycal() {
     gcal
     calPath="/home/dnl/Documents/localStuff"
     gcal -u -f $calPath/myown.cal --date-format='%1%Y %<3#U %>02*D, %>3w#K%2' -cdl@t7 --heading-text="Time:_%t__o'clock"   >  /tmp/caltemp
@@ -203,4 +203,4 @@ fi
 
 
 
-PATH="/home/dnl/.gem/ruby/2.3.0/bin:$PATH"
+PATH="/home/dnl/.gem/ruby/2.4.0/bin:$PATH"
