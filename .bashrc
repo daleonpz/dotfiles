@@ -138,14 +138,18 @@ parse_git_branch() {
 # PS1='[\u@\h \W]\$ '  # Original prompt     
 PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)$ \[$BIBlue\] "
 
+#######################################################
 # program exports
+#######################################################
 export PATH="$PATH:/home/dnl/MATLAB/R2013a/bin"
 export PATH="$PATH:/home/dnl/Documents/scripts"
 export PATH="/opt/android-build:/opt/jdk1.8.0_25/bin:$PATH"
 export EDITOR=vim
 export VISUAL="vim"
 
+#######################################################
 # alias
+#######################################################
 alias apagar='sudo shutdown -P now' 
 alias setvolume='amixer set Master'
 alias matlab_terminal='matlab -nodesktop'
@@ -161,7 +165,9 @@ alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
 alias fjfirefox='firejail --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 
+#######################################################
 # functions
+#######################################################
 mycal() {
     gcal
     calPath="/home/dnl/Documents/localStuff"
@@ -185,6 +191,37 @@ mkcd () {
     cd "$*"
 }
 
+makepdfdir(){
+    
+    if [ -z "$1" ] 
+    then
+        echo "usage: "
+        echo "        makepdfdir DOCTITLE [optional:FILENAME]"
+        return 0
+    fi
+
+    if [ "$2" ]
+    then
+        filename=$2
+    else
+        filename="notes.pdf"
+    fi
+
+    notes=$(find . -name '*.md' -exec echo {} \; | sort)
+    echo "The following notes were found"
+    echo $notes
+    echo "Generating pdf..."
+    pandoc --toc -s \
+                -V toc-title:"Table of Contents"  \
+                -V documentclass=report \
+                -V title:$1 \
+                $notes  -o $filename
+   echo "Done: "$filename
+}
+
+#######################################################
+# Exports
+#######################################################
 # my python scripts
 export PATH="$PATH:/home/dnl/Documents/gitStuff/dnl_tools/tools/python"
 
