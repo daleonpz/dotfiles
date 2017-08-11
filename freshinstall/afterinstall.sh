@@ -55,6 +55,9 @@ cd ~/Documents/gitStuff/dotfiles
 sh restore_dotfiles.sh
 cd ~
 
+# install dictionaries for vim
+# https://github.com/Haspaker/anagram.tips
+
 
 # install valgrind for python 
 # https://stackoverflow.com/questions/20112989/how-to-use-valgrind-with-python

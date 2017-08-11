@@ -75,11 +75,21 @@ set wildmenu
 """"""""""""""""""""""""""""""""
 "    MARKDOWN SETTINGS      "
 """"""""""""""""""""""""""""""""
+function Dictionary(lang)
+    let b:base_path ="/home/dnl/.vim/dictionary/dict.".a:lang 
+    if filereadable(b:base_path)
+        execute "set dictionary=".b:base_path
+    else
+        echo "No existing language dictionary"
+    endif
+endfunction
+
 augroup md_settings 
     set filetype=markdown
     autocmd FileType markdown command Mailfn execute ":-1read $HOME/.vim/markdown/mdmail.footnote"
     autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
     autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
+    autocmd FileType markdown set complete+=k
 "     autocmd FileType markdown nnoremap ** :norm ea**<cr>:norm 2bi**<cr>
 "     autocmd FileType markdown nnoremap __ :norm ea__<cr>:norm bi__<cr>
 augroup END 
@@ -129,7 +139,7 @@ augroup END
 "    MISC      "
 """"""""""""""""""""""""""""""""
 " set keywordprg=trans\ -b
-set keywordprg=trans\ =de 
+set keywordprg=trans\ -d 
 
 " repmap numpad to keyboard
 inoremap <silent> <C-l> <kEnter>
