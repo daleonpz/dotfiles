@@ -172,6 +172,6 @@ command! MakeGcc !gcc -Wall -W -g %
 
 command! MakeTags !ctags -R .
 
-command! Makepdf !pandoc -o %.pdf %
+command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
 
 
