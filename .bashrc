@@ -227,6 +227,7 @@ export PATH="$PATH:/home/dnl/Documents/gitStuff/dnl_tools/tools/python"
 
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
+export PATH=/opt/mpich/bin:$PATH
 export CPATH=/usr/local/include:$CPATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
 

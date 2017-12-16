@@ -1,5 +1,4 @@
-" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just
-" /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
+" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just " /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
 " you can find below.  If you wish to change any of those settings, you should
 " do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
 " everytime an upgrade of the vim packages is performed.  It is recommended to
@@ -89,7 +88,7 @@ endfunction
 
 augroup md_settings 
     set filetype=markdown
-    autocmd FileType markdown command Mailfn execute ":-1read $HOME/.vim/markdown/mdmail.footnote"
+    autocmd FileType markdown command DeutschNotes execute ":-1read $HOME/.vim/markdown/deutschNotes.skeleton"
     autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
     autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
     autocmd FileType markdown set complete+=k
@@ -170,6 +169,7 @@ noremap <F7> :%!xxd -r<CR>
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
+autocmd FileType make setlocal noexpandtab
 " nnoremap <silent> ,make :set makeprg=gcc\ -Wall\ -W\ -g\ %:t<CR> \| :make!<CR> \| :set makeprg=make<CR> \|:clist<CR>
 command! MakeGcc !gcc -Wall -W -g %
 
