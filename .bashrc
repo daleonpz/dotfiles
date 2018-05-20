@@ -183,12 +183,17 @@ opendocument(){
 }
 
 browser(){
-    firefox &> /dev/null
+#     firefox &> /dev/null
+    /home/dnl/waterfox/waterfox &> /dev/null
 }
 
 mkcd () {
     mkdir -p "$*"
     cd "$*"
+}
+
+pomodoro_break (){
+    xfce4-terminal --fullscreen -x break_reminder.sh countdown "$*"
 }
 
 makepdfdir(){
@@ -219,6 +224,8 @@ makepdfdir(){
    echo "Done: "$filename
 }
 
+
+
 #######################################################
 # Exports
 #######################################################
@@ -228,9 +235,11 @@ export PATH="$PATH:/home/dnl/Documents/gitStuff/dnl_tools/tools/python"
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
 export PATH=/opt/mpich/bin:$PATH
+export PATH=/usr/gnat-elf/bin:$PATH
+# export PATH=/usr/gnat/bin:$PATH
+
 export CPATH=/usr/local/include:$CPATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
-
 export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 
@@ -242,3 +251,4 @@ fi
 
 
 PATH="/home/dnl/.gem/ruby/2.4.0/bin:$PATH"
+PATH="/home/dnl/.gem/ruby/2.5.0/bin:$PATH"
