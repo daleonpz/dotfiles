@@ -165,6 +165,8 @@ alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
 alias fjfirefox='firejail --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 
+alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
+
 #######################################################
 # functions
 #######################################################
@@ -193,7 +195,7 @@ mkcd () {
 }
 
 pomodoro_break (){
-    xfce4-terminal --fullscreen -x break_reminder.sh countdown "$*"
+    sleep 25m && xfce4-terminal --fullscreen -x break_reminder.sh countdown "$*"
 }
 
 makepdfdir(){
@@ -247,8 +249,6 @@ export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
 if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
-
-
 
 PATH="/home/dnl/.gem/ruby/2.4.0/bin:$PATH"
 PATH="/home/dnl/.gem/ruby/2.5.0/bin:$PATH"
