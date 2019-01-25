@@ -167,6 +167,16 @@ noremap <F8> :%!xxd<CR>
 " Switch back 
 noremap <F7> :%!xxd -r<CR>
 
+" save code blocks
+autocmd BufWinLeave *.* mkview
+autocmd BufWinEnter *.* silent loadview
+
+" Indent the whole file
+noremap <F6> mzgg=G`z
+
+" Indent block 
+noremap <F5> =i{
+
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
