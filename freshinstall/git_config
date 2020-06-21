@@ -14,3 +14,6 @@ git config --global alias.s  "status"
 git config --global alias.ss "status -s"
 git config --global alias.ch "checkout"
 git config --global core.excludesfile ~/.gitignore_global
+
+
+
