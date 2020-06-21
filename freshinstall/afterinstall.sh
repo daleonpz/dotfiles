@@ -50,6 +50,8 @@ git clone git@github.com:daleonpz/blog.git
 git clone git@github.com:daleonpz/Notes.git
 cd ~
 
+
+
 ## move dotfiles 
 cd ~/Documents/gitStuff/dotfiles
 sh restore_dotfiles.sh
