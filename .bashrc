@@ -30,7 +30,7 @@ alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
-
+alias fehslides='feh -r -F -V -d -Z'
 
 # ex - archive extractor
 # usage: ex <file>
@@ -185,8 +185,7 @@ opendocument(){
 }
 
 browser(){
-#     firefox &> /dev/null
-    /home/dnl/waterfox/waterfox &> /dev/null
+     firefox &> /dev/null
 }
 
 mkcd () {
@@ -237,8 +236,7 @@ export PATH="$PATH:/home/dnl/Documents/gitStuff/dnl_tools/tools/python"
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
 export PATH=/opt/mpich/bin:$PATH
-export PATH=/usr/gnat-elf/bin:$PATH
-# export PATH=/usr/gnat/bin:$PATH
+export PATH=/home/dnl/Documents/toolchains/GNAT/2020-arm-elf/bin:$PATH
 
 export CPATH=/usr/local/include:$CPATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
@@ -250,5 +248,4 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-PATH="/home/dnl/.gem/ruby/2.4.0/bin:$PATH"
-PATH="/home/dnl/.gem/ruby/2.5.0/bin:$PATH"
+#PATH="/home/dnl/.gem/ruby/2.5.0/bin:$PATH"
