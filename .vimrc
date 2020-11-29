@@ -19,6 +19,7 @@ runtime! archlinux.vim
 """"""""""""""""""""""""""""""""""""""""""
 " work vim as vim and not as vi
 set nocompatible
+set autochdir
  
 syntax enable
 filetype plugin on
