@@ -91,8 +91,8 @@ augroup md_settings
     set filetype=markdown
     autocmd FileType markdown command ZettelAddBook execute ":-1read $HOME/.vim/markdown/book.skeleton" 
     autocmd FileType markdown command ZettelAddWebsite execute ":-1read $HOME/.vim/markdown/website.skeleton" 
-    autocmd FileType vim nnoremap <silent> <leader>zab :ZettelAddBook<CR>:r! echo %<CR> kgJgJjh
-    autocmd FileType vim nnoremap <silent> <leader>zaw :ZettelAddWebsite<CR>:r! echo %<CR> kgJgJjh
+    autocmd FileType vim nnoremap <silent> <leader>zab :ZettelAddBook<CR>j:r! echo %<CR> kgJgJjh
+    autocmd FileType vim nnoremap <silent> <leader>zaw :ZettelAddWebsite<CR>j:r! echo %<CR> kgJgJjh
     autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
     autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
     autocmd FileType markdown set complete+=k
