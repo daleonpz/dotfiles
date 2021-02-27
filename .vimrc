@@ -89,7 +89,10 @@ endfunction
 
 augroup md_settings 
     set filetype=markdown
-    autocmd FileType markdown command DeutschNotes execute ":-1read $HOME/.vim/markdown/deutschNotes.skeleton"
+    autocmd FileType markdown command ZettelAddBook execute ":-1read $HOME/.vim/markdown/book.skeleton" 
+    autocmd FileType markdown command ZettelAddWebsite execute ":-1read $HOME/.vim/markdown/website.skeleton" 
+    autocmd FileType vim nnoremap <silent> <leader>zab :ZettelAddBook<CR>:r! echo %<CR> kgJgJjh
+    autocmd FileType vim nnoremap <silent> <leader>zaw :ZettelAddWebsite<CR>:r! echo %<CR> kgJgJjh
     autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
     autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
     autocmd FileType markdown set complete+=k
@@ -178,6 +181,10 @@ noremap <F6> mzgg=G`z
 " Indent block 
 noremap <F5> =i{
 
+" Move around buffers
+map <C-J> :bnext<CR>
+map <C-K> :bprev<CR>
+
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
@@ -189,4 +196,19 @@ command! MakeTags !ctags -R .
 
 command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
 
+""""""""""""""""""""""""""""""""
+"    Zettelkasten "
+""""""""""""""""""""""""""""""""
+let g:zettelkasten = "/home/dnl/Documents/git/zettelkasten/_posts/"
+" command! -nargs=1 NewZettel :execute ":e" zettelkasten . strftime("%Y-%m-%d-%H%M") . "-<args>.md"
+command! -nargs=0 NewZettel :execute ":e" zettelkasten . strftime("%Y-%m-%d-%H%M%s").".md"
+nnoremap <leader>zn :NewZettel<CR>
+nnoremap <leader>zs :ZettelSearch<CR>
+nnoremap <leader>zb :ZettelBackLinks<CR>
 
+call plug#begin()
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'michal-h21/vim-zettel'
+call plug#end()

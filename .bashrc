@@ -248,4 +248,6 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-#PATH="/home/dnl/.gem/ruby/2.5.0/bin:$PATH"
+
+PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
+
