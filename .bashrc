@@ -141,8 +141,8 @@ PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen
 #######################################################
 # program exports
 #######################################################
-export PATH="$PATH:/home/dnl/MATLAB/R2013a/bin"
-export PATH="$PATH:/home/dnl/Documents/scripts"
+export PATH="$PATH:/home/dnl/.scripts/bash"
+export PATH="$PATH:/home/dnl/.scripts/C"
 export PATH="/opt/android-build:/opt/jdk1.8.0_25/bin:$PATH"
 export EDITOR=vim
 export VISUAL="vim"
@@ -193,10 +193,12 @@ mkcd () {
     cd "$*"
 }
 
-pomodoro_break (){
-    sleep 25m && xfce4-terminal --fullscreen -x break_reminder.sh countdown "$*"
+pomodoro_break_25m (){
+    sleep 25m && xfce4-terminal --fullscreen -x break_reminder.sh countdown 300 &
 }
-
+pomodoro_break_50m (){
+    sleep 50m && xfce4-terminal --fullscreen -x break_reminder.sh countdown 600 &
+}
 makepdfdir(){
     
     if [ -z "$1" ] 
@@ -226,12 +228,18 @@ makepdfdir(){
 }
 
 
+# fzf autocompletion aktivieren
+if [ -x "$(command -v fzf)"  ]
+then
+    source /usr/share/fzf/key-bindings.bash
+    source /usr/share/fzf/completion.bash
+fi
 
 #######################################################
 # Exports
 #######################################################
 # my python scripts
-export PATH="$PATH:/home/dnl/Documents/gitStuff/dnl_tools/tools/python"
+export PATH="$PATH:/home/dnl/.scripts/python"
 
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
