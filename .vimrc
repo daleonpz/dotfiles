@@ -206,6 +206,28 @@ nnoremap <leader>zn :NewZettel<CR>
 nnoremap <leader>zs :ZettelSearch<CR>
 nnoremap <leader>zb :ZettelBackLinks<CR>
 
+execute pathogen#infect()
+
+
+" set statusline+=%#warningmsg#
+" set statusline+=%{SyntasticStatuslineFlag()}
+" set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Switch to hex-editor`
+noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
+" Switch back
+noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
+noremap <F2> :SyntasticToggleMode<CR>
+
+let g:syntastic_c_checkers=['make','cppcheck']
+" let g:syntastic_c_cppcheck_args=['--enable=all']
+
+
 call plug#begin()
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
