@@ -256,6 +256,7 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
+alias run_esp32docker_usb='sudo docker run --rm -v $PWD:/project -w /project -it --device=/dev/ttyUSB0 espressif/idf'
 alias run_esp32docker='sudo docker run --rm -v $PWD:/project -w /project -it espressif/idf'
 alias draganddrop="dragonzord -a -x"
 
