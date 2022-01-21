@@ -158,7 +158,7 @@ augroup END
 " add comments
 autocmd FileType c,cpp,java,scala,javascript let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-autocmd FileType conf,fstab       let b:comment_leader = '# '
+autocmd FileType conf,fstab,tmux      let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
 autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType ada              let b:comment_leader = '-- '

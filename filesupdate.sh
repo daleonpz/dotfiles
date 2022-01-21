@@ -6,3 +6,4 @@
 \cp /etc/inputrc .inputrc 
 \cp ~/.vifm/vifmrc  .vifmrc
 \cp ~/.gdbinit .gdbinit
+\cp ~/.tmux.conf .tmux.conf

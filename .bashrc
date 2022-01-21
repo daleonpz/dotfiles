@@ -156,14 +156,14 @@ alias matlab_terminal='matlab -nodesktop'
 alias rmdir='rm -rf'
 alias gccWg='gcc -W -Wall -g3'
 alias valgdb='valgrind --vgdb-error=0'
-alias execjekyll='bundle exec jekyll serve'
+alias execjekyll='bundle-2.7 exec jekyll serve'
 alias pdb2.7='python2.7 -m pdb'
 valpyPath="/home/dnl/Documents/gitStuff/Python-2.7.3"
 alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $valpyPath/bin/python2.7'
 alias addctags='ctags -R .'
 alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
-alias fjfirefox='firejail --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
+alias fjfirefox='firejail --seccomp --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 
 alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
 
@@ -261,4 +261,5 @@ alias run_esp32docker='sudo docker run --rm -v $PWD:/project -w /project -it esp
 alias draganddrop="dragonzord -a -x"
 
 PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
+PATH="/home/dnl/.gem/ruby/3.0.0/bin:$PATH"
 
