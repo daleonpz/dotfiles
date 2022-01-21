@@ -31,6 +31,7 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fehslides='feh -r -F -V -d -Z'
+alias smartsnips='SmartSnippets_Studio &> /dev/null'
 
 # ex - archive extractor
 # usage: ex <file>
@@ -141,9 +142,6 @@ PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen
 #######################################################
 # program exports
 #######################################################
-export PATH="$PATH:/home/dnl/.scripts/bash"
-export PATH="$PATH:/home/dnl/.scripts/C"
-export PATH="/opt/android-build:/opt/jdk1.8.0_25/bin:$PATH"
 export EDITOR=vim
 export VISUAL="vim"
 
@@ -156,30 +154,20 @@ alias matlab_terminal='matlab -nodesktop'
 alias rmdir='rm -rf'
 alias gccWg='gcc -W -Wall -g3'
 alias valgdb='valgrind --vgdb-error=0'
-alias execjekyll='bundle-2.7 exec jekyll serve'
+alias execjekyll='bundle exec jekyll serve'
 alias pdb2.7='python2.7 -m pdb'
 valpyPath="/home/dnl/Documents/gitStuff/Python-2.7.3"
 alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $valpyPath/bin/python2.7'
-alias addctags='ctags -R .'
+alias ctagsbuild='ctags -R .'
 alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
 alias fjfirefox='firejail --seccomp --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
-
 alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
+
 
 #######################################################
 # functions
 #######################################################
-mycal() {
-    gcal
-    calPath="/home/dnl/Documents/localStuff"
-    gcal -u -f $calPath/myown.cal --date-format='%1%Y %<3#U %>02*D, %>3w#K%2' -cdl@t7 --heading-text="Time:_%t__o'clock"   >  /tmp/caltemp
-
-#     sed -e "s/<\(.*\)$/\x1b[01;32m&\x1b[0m/g"   /tmp/caltemp
-    sed -e "s/<\(.*\)>/\x1b[01;32mTODAY/g" -e "s/TO\(.*\)$/&\x1b[0m/g"  -e "s/\(.*\!\)$/\x1b[01;31m&\x1b[0m/g" /tmp/caltemp
-}
-
-
 opendocument(){
     zathura "$*" &> /dev/null 
 }
@@ -193,12 +181,21 @@ mkcd () {
     cd "$*"
 }
 
-pomodoro_break_25m (){
-    sleep 25m && xfce4-terminal --fullscreen -x break_reminder.sh countdown 300 &
+pomodoro_break_50_10 (){
+    sleep 50m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 600
 }
-pomodoro_break_50m (){
-    sleep 50m && xfce4-terminal --fullscreen -x break_reminder.sh countdown 600 &
+pomodoro_break_45_15 (){
+    sleep 45m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 900
 }
+
+pomodoro_break_25_5 (){
+    sleep 25m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 300
+}
+
+pomodoro_break_30_10 (){
+    sleep 30m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 600
+}
+
 makepdfdir(){
     
     if [ -z "$1" ] 
@@ -239,12 +236,15 @@ fi
 # Exports
 #######################################################
 # my python scripts
-export PATH="$PATH:/home/dnl/.scripts/python"
+export PATH="$PATH:/home/me/.scripts/"
+export PATH="$PATH:/home/me/DiaSemi/SmartSnippetsStudio2.0.10/CDT/"
+export PATH="$PATH:/home/me/Documents/git/dbeaver/product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/x86_64/dbeaver/"
 
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
 export PATH=/opt/mpich/bin:$PATH
-export PATH=/home/dnl/Documents/toolchains/GNAT/2020-arm-elf/bin:$PATH
+export PATH=/usr/gnat-elf/bin:$PATH
+# export PATH=/usr/gnat/bin:$PATH
 
 export CPATH=/usr/local/include:$CPATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
@@ -263,3 +263,63 @@ alias draganddrop="dragonzord -a -x"
 PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
 PATH="/home/dnl/.gem/ruby/3.0.0/bin:$PATH"
 
+#######################################################
+# cscope 
+#######################################################
+function build_cscope_db_func()
+ {
+     find $PWD -name '*.c' \
+            -o -name '*.h' \
+            -o -name '*.mk' \
+            -o -name '*.xml'\
+            -o -name '*.cfg'\
+            -o -name '*.ini'\
+            -o -name '*.dat'\
+            -o -name '*.cpp' > $PWD/cscope.files
+  cscope -RCbk
+  export CSCOPE_DB=$PWD/cscope.out
+}
+alias csbuild=build_cscope_db_func
+
+function cscope_export_db_func()
+{
+   export CSCOPE_DB=$PWD/cscope.out
+}
+alias csexport=cscope_export_db_func
+
+alias tagsbuild='csbuild && ctagsbuild'
+alias pman='postman &> /dev/null'
+alias strail='sourcetrail &> /dev/null'
+#######################################################
+# Embedded related aliases 
+#######################################################
+
+#alias jlink640GDBServer='/home/me/SEGGER/JLink_6.40/JLinkGDBServer -if swd -device Cortex-M0 -endian little -speed 4000 -singlerun -log jlink.log -select usb=480059008 -port 2331 -swoport 2332 -telnetport 2333'
+
+alias jlink640GDBServer='/home/me/SEGGER/JLink_6.40/JLinkGDBServer -if swd -device Cortex-M0 -endian little -speed 4000 -singlerun -log jlink.log -select usb=000059406895 -port 2331 -swoport 2332 -telnetport 2333'
+
+alias gdb4_9Dialog='/home/me/DiaSemi/SmartSnippetsStudio2.0.10/GCC/4_9-2015q3/bin/arm-none-eabi-gdb -x ~/gdbparams'
+
+function dialog_export_gcc(){
+    export PATH=/home/me/DiaSemi/SmartSnippetsStudio2.0.10/GCC/4_9-2015q3/bin/:$PATH
+}
+alias export_dialog_gcc=dialog_export_gcc
+
+alias pimpmake='make all | ccze -A'
+
+alias ssh_git="ssh -f -N -D 1234 hopper@3.125.214.190"
+
+alias rtt_viewer="/home/me/Downloads/JLink_Linux_V670c_x86_64/JLinkRTTViewerExe"
+
+export CPPUTEST_HOME=~/tools/cpputest
+
+export PATH=$PATH:/usr/local/go/bin
+
+export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export WORKON_HOME=$HOME/.virtualenvs   # Optional
+export VIRTUALENVWRAPPER_PYTHON=$(which python3)
+source /home/me/.local/bin/virtualenvwrapper.sh
+export PATH="$PATH:/opt/mssql-tools/bin"

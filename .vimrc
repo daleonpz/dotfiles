@@ -19,7 +19,6 @@ runtime! archlinux.vim
 """"""""""""""""""""""""""""""""""""""""""
 " work vim as vim and not as vi
 set nocompatible
-set autochdir
  
 syntax enable
 filetype plugin on
@@ -89,10 +88,7 @@ endfunction
 
 augroup md_settings 
     set filetype=markdown
-    autocmd FileType markdown command ZettelAddBook execute ":-1read $HOME/.vim/markdown/book.skeleton" 
-    autocmd FileType markdown command ZettelAddWebsite execute ":-1read $HOME/.vim/markdown/website.skeleton" 
-    autocmd FileType vim nnoremap <silent> <leader>zab :ZettelAddBook<CR>j:r! echo %<CR> kgJgJjh
-    autocmd FileType vim nnoremap <silent> <leader>zaw :ZettelAddWebsite<CR>j:r! echo %<CR> kgJgJjh
+    autocmd FileType markdown command DeutschNotes execute ":-1read $HOME/.vim/markdown/deutschNotes.skeleton"
     autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
     autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
     autocmd FileType markdown set complete+=k
@@ -158,13 +154,15 @@ augroup END
 " add comments
 autocmd FileType c,cpp,java,scala,javascript let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
-autocmd FileType conf,fstab,tmux      let b:comment_leader = '# '
+autocmd FileType conf,fstab,yml,yaml,cmake       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
 autocmd FileType mail             let b:comment_leader = '> '
 autocmd FileType ada              let b:comment_leader = '-- '
 autocmd FileType vim              let b:comment_leader = '" '
 noremap <silent> ,cc :<C-B>silent <C-E>s/^/<C-R>=escape(b:comment_leader,'\/')<CR>/<CR>:nohlsearch<CR>
 noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<CR>//e<CR>:nohlsearch<CR>
+noremap <A-Left>  :-tabmove<cr>
+noremap <A-Right> :+tabmove<cr>
 
 " Switch to hex-editor`
 noremap <F8> :%!xxd<CR> 
@@ -181,10 +179,6 @@ noremap <F6> mzgg=G`z
 " Indent block 
 noremap <F5> =i{
 
-" Move around buffers
-map <C-J> :bnext<CR>
-map <C-K> :bprev<CR>
-
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
@@ -196,15 +190,8 @@ command! MakeTags !ctags -R .
 
 command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
 
-""""""""""""""""""""""""""""""""
-"    Zettelkasten "
-""""""""""""""""""""""""""""""""
-let g:zettelkasten = "/home/dnl/Documents/git/zettelkasten/_posts/"
-" command! -nargs=1 NewZettel :execute ":e" zettelkasten . strftime("%Y-%m-%d-%H%M") . "-<args>.md"
-command! -nargs=0 NewZettel :execute ":e" zettelkasten . strftime("%Y-%m-%d-%H%M%s").".md"
-nnoremap <leader>zn :NewZettel<CR>
-nnoremap <leader>zs :ZettelSearch<CR>
-nnoremap <leader>zb :ZettelBackLinks<CR>
+set autochdir
+
 
 execute pathogen#infect()
 
@@ -220,17 +207,22 @@ let g:syntastic_check_on_wq = 0
 
 " Switch to hex-editor`
 noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
-" Switch back
+" Switch back 
 noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
 
 let g:syntastic_c_checkers=['make','cppcheck']
+let g:syntastic_sh_checkers=['shellcheck']
+let g:syntastic_cmake_checkers=['cmakelint']
+let g:syntastic_python_checkers=['mypy']
 " let g:syntastic_c_cppcheck_args=['--enable=all']
 
+set background=dark
 
 call plug#begin()
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'michal-h21/vim-zettel'
+" Plug 'michal-h21/vim-zettel'
 call plug#end()
