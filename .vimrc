@@ -210,19 +210,22 @@ noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
 " Switch back 
 noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
+set pastetoggle=<F10>
 
 let g:syntastic_c_checkers=['make','cppcheck']
 let g:syntastic_sh_checkers=['shellcheck']
 let g:syntastic_cmake_checkers=['cmakelint']
 let g:syntastic_python_checkers=['mypy']
+let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
 " let g:syntastic_c_cppcheck_args=['--enable=all']
 
 set background=dark
 
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vimwiki/vimwiki'
+" Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'psf/black', { 'branch': 'stable' }
 " Plug 'michal-h21/vim-zettel'
 call plug#end()

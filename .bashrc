@@ -161,7 +161,7 @@ alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $
 alias ctagsbuild='ctags -R .'
 alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
-alias fjfirefox='firejail --seccomp --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
+alias fjfirefox='firejail --seccomp --private  firefox -no-remote'
 alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
 
 
@@ -176,6 +176,9 @@ browser(){
      firefox &> /dev/null
 }
 
+chromium(){
+     chromium-browser &> /dev/null
+}
 mkcd () {
     mkdir -p "$*"
     cd "$*"
@@ -323,3 +326,8 @@ export WORKON_HOME=$HOME/.virtualenvs   # Optional
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 source /home/me/.local/bin/virtualenvwrapper.sh
 export PATH="$PATH:/opt/mssql-tools/bin"
+
+
+export PROMPT_COMMAND='history -a; history -r'
+
+source /home/me/.bash_completions/nbterm.sh
