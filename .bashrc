@@ -331,3 +331,8 @@ export PATH="$PATH:/opt/mssql-tools/bin"
 export PROMPT_COMMAND='history -a; history -r'
 
 source /home/me/.bash_completions/nbterm.sh
+
+export PYENV_ROOT="$HOME/.pyenv"
+command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
