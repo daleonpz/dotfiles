@@ -142,6 +142,7 @@ augroup END
 """"""""""""""""""""""""""""""""
 " set keywordprg=trans\ -b
 set keywordprg=trans\ -d 
+set smartcase
 
 " repmap numpad to keyboard
 inoremap <silent> <C-l> <kEnter>
@@ -152,7 +153,7 @@ augroup PatchDiffHighlight
 augroup END
 
 " add comments
-autocmd FileType c,cpp,java,scala,javascript let b:comment_leader = '// '
+autocmd FileType c,cpp,cs,java,scala,javascript let b:comment_leader = '// '
 autocmd FileType sh,ruby,python   let b:comment_leader = '# '
 autocmd FileType conf,fstab,yml,yaml,cmake       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
@@ -219,13 +220,50 @@ let g:syntastic_python_checkers=['mypy']
 let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
 " let g:syntastic_c_cppcheck_args=['--enable=all']
 
+" let g:ycm_autoclose_preview_window_after_completion=1
+" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" map <leader>r  :YcmCompleter GoToReferences<CR>
+" 
+" "Toggle YouCompleteMe on and off with F3
+" function Toggle_ycm()
+"     if g:ycm_show_diagnostics_ui == 0
+"         let g:ycm_auto_trigger = 1
+"         let g:ycm_show_diagnostics_ui = 1
+"         :YcmRestartServer
+"         :e
+"         :echo "YCM on"
+"     elseif g:ycm_show_diagnostics_ui == 1
+"         let g:ycm_auto_trigger = 0
+"         let g:ycm_show_diagnostics_ui = 0
+"         :YcmRestartServer
+"         :e
+"         :echo "YCM off"
+"     endif
+" endfunction
+" map <leader>y :call Toggle_ycm() <CR>
+" 
+
+" let g:ycm_python_interpreter_path = ''
+" let g:ycm_python_sys_path = []
+" let g:ycm_extra_conf_vim_data = [
+"   \  'g:ycm_python_interpreter_path',
+"   \  'g:ycm_python_sys_path'
+"   \]
+" let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
+" 
+
+" python with virtualenv support
 set background=dark
+
+set clipboard=unnamedplus
+set clipboard+=unnamed
 
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'vimwiki/vimwiki'
+Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'psf/black', { 'branch': 'stable' }
+Plug 'ycm-core/YouCompleteMe'
+Plug 'github/copilot.vim'
 " Plug 'michal-h21/vim-zettel'
 call plug#end()

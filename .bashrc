@@ -144,6 +144,7 @@ PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen
 #######################################################
 export EDITOR=vim
 export VISUAL="vim"
+export SUDO_EDITOR=/usr/bin/vim
 
 #######################################################
 # alias
@@ -161,24 +162,33 @@ alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $
 alias ctagsbuild='ctags -R .'
 alias translate='trans -b'
 alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
-alias fjfirefox='firejail --seccomp --private  firefox -no-remote'
+alias fjfirefox='firejail --seccomp --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
 alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
 
 
 #######################################################
 # functions
 #######################################################
+# capture the output of a command so it can be retrieved with ret
+cap () { tee /tmp/capture.out; }
+
+# return the output of the most recent command that was captured by cap
+ret () { cat /tmp/capture.out; }
+
 opendocument(){
     zathura "$*" &> /dev/null 
+}
+
+mullvad-browser(){
+    cd ~/Downloads/mullvad-browser 
+    ./start-mullvad-browser.desktop --browser &> /dev/null
+    cd -
 }
 
 browser(){
      firefox &> /dev/null
 }
 
-chromium(){
-     chromium-browser &> /dev/null
-}
 mkcd () {
     mkdir -p "$*"
     cd "$*"
@@ -239,9 +249,7 @@ fi
 # Exports
 #######################################################
 # my python scripts
-export PATH="$PATH:/home/me/.scripts/"
-export PATH="$PATH:/home/me/DiaSemi/SmartSnippetsStudio2.0.10/CDT/"
-export PATH="$PATH:/home/me/Documents/git/dbeaver/product/community/target/products/org.jkiss.dbeaver.core.product/linux/gtk/x86_64/dbeaver/"
+export PATH="$PATH:/home/dnl/.scripts/"
 
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
@@ -278,6 +286,7 @@ function build_cscope_db_func()
             -o -name '*.cfg'\
             -o -name '*.ini'\
             -o -name '*.dat'\
+            -o -name '*.py'\
             -o -name '*.cpp' > $PWD/cscope.files
   cscope -RCbk
   export CSCOPE_DB=$PWD/cscope.out
@@ -296,24 +305,10 @@ alias strail='sourcetrail &> /dev/null'
 #######################################################
 # Embedded related aliases 
 #######################################################
-
-#alias jlink640GDBServer='/home/me/SEGGER/JLink_6.40/JLinkGDBServer -if swd -device Cortex-M0 -endian little -speed 4000 -singlerun -log jlink.log -select usb=480059008 -port 2331 -swoport 2332 -telnetport 2333'
-
-alias jlink640GDBServer='/home/me/SEGGER/JLink_6.40/JLinkGDBServer -if swd -device Cortex-M0 -endian little -speed 4000 -singlerun -log jlink.log -select usb=000059406895 -port 2331 -swoport 2332 -telnetport 2333'
-
-alias gdb4_9Dialog='/home/me/DiaSemi/SmartSnippetsStudio2.0.10/GCC/4_9-2015q3/bin/arm-none-eabi-gdb -x ~/gdbparams'
-
-function dialog_export_gcc(){
-    export PATH=/home/me/DiaSemi/SmartSnippetsStudio2.0.10/GCC/4_9-2015q3/bin/:$PATH
-}
-alias export_dialog_gcc=dialog_export_gcc
-
 alias pimpmake='make all | ccze -A'
 
-alias ssh_git="ssh -f -N -D 1234 hopper@3.125.214.190"
 
-alias rtt_viewer="/home/me/Downloads/JLink_Linux_V670c_x86_64/JLinkRTTViewerExe"
-
+alias get_idf='. /home/dnl/Documents/git/temp_repo/esp-idf/export.sh'
 export CPPUTEST_HOME=~/tools/cpputest
 
 export PATH=$PATH:/usr/local/go/bin
@@ -324,15 +319,14 @@ export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
 
 export WORKON_HOME=$HOME/.virtualenvs   # Optional
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-source /home/me/.local/bin/virtualenvwrapper.sh
+source /home/dnl/.local/bin/virtualenvwrapper.sh
 export PATH="$PATH:/opt/mssql-tools/bin"
 
-
 export PROMPT_COMMAND='history -a; history -r'
-
-source /home/me/.bash_completions/nbterm.sh
 
 export PYENV_ROOT="$HOME/.pyenv"
 command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
+
+source /usr/share/nvm/init-nvm.sh
