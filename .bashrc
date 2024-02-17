@@ -271,6 +271,15 @@ alias run_esp32docker_usb='sudo docker run --rm -v $PWD:/project -w /project -it
 alias run_esp32docker='sudo docker run --rm -v $PWD:/project -w /project -it espressif/idf'
 alias draganddrop="dragonzord -a -x"
 
+dpick() {
+    local args=($(pick "$1" "$(ret)") )
+    vim "${args[@]}"
+}
+
+dgrep() {
+    cgrep "$@" | cap
+}
+
 PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
 PATH="/home/dnl/.gem/ruby/3.0.0/bin:$PATH"
 
