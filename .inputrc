@@ -33,14 +33,4 @@ $if mode=emacs
 # for freebsd console
 "\e[H": beginning-of-line
 "\e[F": end-of-line
-
-# mappings for making up and down arrow searching through history:
-"\e[A": history-search-backward
-"\e[B": history-search-forward
-"\e[C": forward-char
-"\e[D": backward-char
-
-#Use [C-p] and [C-n] to cycle through all the possible completions:
-TAB: menu-complete
-"\e[Z": "\e-1\C-i"
 $endif

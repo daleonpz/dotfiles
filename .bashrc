@@ -137,7 +137,7 @@ parse_git_branch() {
 
 # prompt
 # PS1='[\u@\h \W]\$ '  # Original prompt     
-PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)$ \[$BIBlue\] "
+PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)$ \[$IWhite\] "
 
 #######################################################
 # program exports
@@ -179,7 +179,7 @@ opendocument(){
     zathura "$*" &> /dev/null 
 }
 
-mullvad-browser(){
+mubrowser(){
     cd ~/Downloads/mullvad-browser 
     ./start-mullvad-browser.desktop --browser &> /dev/null
     cd -
@@ -282,6 +282,7 @@ dgrep() {
 
 PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
 PATH="/home/dnl/.gem/ruby/3.0.0/bin:$PATH"
+PATH="/home/dnl/.local/share/gem/ruby/3.0.0/bin:$PATH"
 
 #######################################################
 # cscope 
@@ -317,7 +318,7 @@ alias strail='sourcetrail &> /dev/null'
 alias pimpmake='make all | ccze -A'
 
 
-alias get_idf='. /home/dnl/Documents/git/temp_repo/esp-idf/export.sh'
+alias get_idf='. /home/dnl/Documents/git/esp-idf/export.sh'
 export CPPUTEST_HOME=~/tools/cpputest
 
 export PATH=$PATH:/usr/local/go/bin
@@ -328,7 +329,7 @@ export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
 
 export WORKON_HOME=$HOME/.virtualenvs   # Optional
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-source /home/dnl/.local/bin/virtualenvwrapper.sh
+# source /home/dnl/.local/bin/virtualenvwrapper.sh
 export PATH="$PATH:/opt/mssql-tools/bin"
 
 export PROMPT_COMMAND='history -a; history -r'

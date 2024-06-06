@@ -194,7 +194,7 @@ command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
 set autochdir
 
 
-execute pathogen#infect()
+" execute pathogen#infect()
 
 
 " set statusline+=%#warningmsg#
@@ -211,7 +211,19 @@ noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
 " Switch back 
 noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
-set pastetoggle=<F10>
+set pastetoggle=<F9>
+" Toggle Tagbar with F8
+nmap <F8> :TagbarToggle<CR>
+" Ensure ctags is installed for better compatibility
+let g:tagbar_ctags_bin='ctags'
+let g:tagbar_width=30
+
+" Reduce updatetime to make CursorHold more responsive
+set updatetime=1000
+"
+" " Auto-refresh Tagbar on CursorHold and CursorHoldI
+autocmd CursorHold * silent! TagbarRefresh
+autocmd CursorHoldI * silent! TagbarRefresh
 
 let g:syntastic_c_checkers=['make','cppcheck']
 let g:syntastic_sh_checkers=['shellcheck']
@@ -252,6 +264,9 @@ let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-package
 " let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 " 
 
+let g:ag_working_path_mode="r"
+
+
 " python with virtualenv support
 set background=dark
 
@@ -263,7 +278,9 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'ycm-core/YouCompleteMe'
+Plug 'majutsushi/tagbar'
+" Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
+" Plug 'epmatsw/ag.vim'
 " Plug 'michal-h21/vim-zettel'
 call plug#end()
