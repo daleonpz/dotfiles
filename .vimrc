@@ -19,35 +19,30 @@ runtime! archlinux.vim
 """"""""""""""""""""""""""""""""""""""""""
 " work vim as vim and not as vi
 set nocompatible
- 
+" Enable syntax highlighthing
 syntax enable
+" Enable filetype detection and plugins
 filetype plugin on
-
 " set relative number line
 set rnu
-
 " show file name 
 set laststatus=2
-
 " sets the cursor shape to a 100% sized vertical bar for insert mode 
 set guicursor+=i:ver100-iCursor
-
 " show where the cursor is
 set cursorcolumn
-
 set tabstop=4       " The width of a TAB is set to 4.
                     " Still it is a \t. It is just that
                     " Vim will interpret it to be having
                     " a width of 4.
-
 set shiftwidth=4    " Indents will have a width of 4
-
 set softtabstop=4   " Sets the number of columns for a TAB
-
 set expandtab       " Expand TABs to spaces
-
+" Configure how certain whitespace characters are displayed: tabs as »»,
+" trailing spaces as ·, and non-breaking spaces as ~
 execute "set listchars=tab:\u00bb\u00bb,trail:\u00b7,nbsp:~"
 set list
+
 """"""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:
 """"""""""""""""""""""""""""""""""""""""""
@@ -55,16 +50,16 @@ set list
 " Provides tab-completion for all file-related tasks
 set path+=**
 set path+=$HOME/.vim/**
-
 " Display all matching files when we tab complete
 set wildmenu
 
 """"""""""""""""""""""""""""""""
 "    PLUGINS      "
 """"""""""""""""""""""""""""""""
-set ruler
+set ruler " Enable the ruler, which shows the cursor position
+" Customize the ruler format to display the date and time, line number, column
+" number, and percentage through the file
 set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
-
 
 """"""""""""""""""""""""""""""""""""""""""
 "
@@ -142,7 +137,7 @@ augroup END
 """"""""""""""""""""""""""""""""
 " set keywordprg=trans\ -b
 set keywordprg=trans\ -d 
-set smartcase
+" set smartcase
 
 " repmap numpad to keyboard
 inoremap <silent> <C-l> <kEnter>
@@ -180,27 +175,30 @@ noremap <F6> mzgg=G`z
 " Indent block 
 noremap <F5> =i{
 
+" Toggle paste mode on and off using the F9 key; paste mode disables
+" auto-indenting and other automatic formatting, making it easier to paste
+" code or text from an external source
+set pastetoggle=<F9>
+
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
 autocmd FileType make setlocal noexpandtab
 " nnoremap <silent> ,make :set makeprg=gcc\ -Wall\ -W\ -g\ %:t<CR> \| :make!<CR> \| :set makeprg=make<CR> \|:clist<CR>
 command! MakeGcc !gcc -Wall -W -g %
-
 command! MakeTags !ctags -R .
-
 command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
-
 set autochdir
 
-
 " execute pathogen#infect()
-
 
 " set statusline+=%#warningmsg#
 " set statusline+=%{SyntasticStatuslineFlag()}
 " set statusline+=%*
 
+""""""""""""""""""""""""""""""""
+"   SYNTASTIC: LINT MANAGER    "
+""""""""""""""""""""""""""""""""
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
@@ -211,12 +209,27 @@ noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
 " Switch back 
 noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
-set pastetoggle=<F9>
+
+let g:syntastic_c_checkers=['make','cppcheck']
+let g:syntastic_sh_checkers=['shellcheck']
+let g:syntastic_cmake_checkers=['cmakelint']
+let g:syntastic_python_checkers=['mypy']
+let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
+" let g:syntastic_c_cppcheck_args=['--enable=all']
+
+""""""""""""""""""""""""""""""""
+" TAGBAR PLUGIN
+""""""""""""""""""""""""""""""""
 " Toggle Tagbar with F8
 nmap <F8> :TagbarToggle<CR>
 " Ensure ctags is installed for better compatibility
 let g:tagbar_ctags_bin='ctags'
-let g:tagbar_width=30
+let g:tagbar_width=40
+" Enable Tagbar to appear on the left side
+let g:tagbar_left=1
+" Automatically open Tagbar when starting Vim or opening a file
+autocmd VimEnter * TagbarOpen
+autocmd BufReadPost * TagbarOpen
 
 " Reduce updatetime to make CursorHold more responsive
 set updatetime=1000
@@ -225,12 +238,6 @@ set updatetime=1000
 autocmd CursorHold * silent! TagbarRefresh
 autocmd CursorHoldI * silent! TagbarRefresh
 
-let g:syntastic_c_checkers=['make','cppcheck']
-let g:syntastic_sh_checkers=['shellcheck']
-let g:syntastic_cmake_checkers=['cmakelint']
-let g:syntastic_python_checkers=['mypy']
-let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
-" let g:syntastic_c_cppcheck_args=['--enable=all']
 
 " let g:ycm_autoclose_preview_window_after_completion=1
 " map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -273,12 +280,16 @@ set background=dark
 set clipboard=unnamedplus
 set clipboard+=unnamed
 
+"""""""""""""""""""""""""""""""""""
+" PLUG: Plugin Manager            "
+"""""""""""""""""""""""""""""""""""
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
+Plug 'vim-syntastic/syntastic'
 " Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
 " Plug 'epmatsw/ag.vim'
