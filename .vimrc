@@ -186,6 +186,21 @@ set statusline+=%l/%L\ (%p%%)\ %F
 " source CSCOPE settings for vim 
 source ~/.vim/autoload/cscope_maps.vim
 
+" AgIn: Start ag in the specified directory
+" e.g.
+"   :AgIn .. foo
+function! s:ag_in(bang, ...)
+  let start_dir=expand(a:1)
+
+  if !isdirectory(start_dir)
+    throw 'not a valid directory: ' .. start_dir
+  endif
+  " Press `?' to enable preview window.
+  call fzf#vim#ag(join(a:000[1:], ' '), fzf#vim#with_preview({'dir': start_dir}, 'up:50%:hidden', '?'), a:bang)
+
+endfunction
+
+command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
 """"""""""""""""""""""""""""""""
 "    MAKE      "
 """"""""""""""""""""""""""""""""
