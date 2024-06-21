@@ -161,7 +161,7 @@ noremap <A-Left>  :-tabmove<cr>
 noremap <A-Right> :+tabmove<cr>
 
 " Switch to hex-editor`
-noremap <F8> :%!xxd<CR> 
+noremap <S-F7> :%!xxd<CR> 
 " Switch back 
 noremap <F7> :%!xxd -r<CR>
 
@@ -179,6 +179,12 @@ noremap <F5> =i{
 " auto-indenting and other automatic formatting, making it easier to paste
 " code or text from an external source
 set pastetoggle=<F9>
+
+" show Status line + linenumber and percentage (10/100) 10%
+set statusline+=%l/%L\ (%p%%)\ %F
+
+" source CSCOPE settings for vim 
+source ~/.vim/autoload/cscope_maps.vim
 
 """"""""""""""""""""""""""""""""
 "    MAKE      "
@@ -204,10 +210,10 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" Switch to hex-editor`
-noremap <F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
+" Enable SPLINT
+noremap <S-F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
 " Switch back 
-noremap <F4> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
+noremap <F3> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
 
 let g:syntastic_c_checkers=['make','cppcheck']
@@ -227,9 +233,9 @@ let g:tagbar_ctags_bin='ctags'
 let g:tagbar_width=40
 " Enable Tagbar to appear on the left side
 let g:tagbar_left=1
-" Automatically open Tagbar when starting Vim or opening a file
-autocmd VimEnter * TagbarOpen
-autocmd BufReadPost * TagbarOpen
+" " Automatically open Tagbar when starting Vim or opening a file
+" autocmd VimEnter * TagbarOpen
+" autocmd BufReadPost * TagbarOpen
 
 " Reduce updatetime to make CursorHold more responsive
 set updatetime=1000
@@ -280,18 +286,20 @@ set background=dark
 set clipboard=unnamedplus
 set clipboard+=unnamed
 
+
 """""""""""""""""""""""""""""""""""
 " PLUG: Plugin Manager            "
 """""""""""""""""""""""""""""""""""
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'vimwiki/vimwiki'
+"Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-syntastic/syntastic'
 " Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
+" Plug 'rking/ag.vim'
 " Plug 'epmatsw/ag.vim'
 " Plug 'michal-h21/vim-zettel'
 call plug#end()
