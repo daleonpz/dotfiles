@@ -137,7 +137,12 @@ parse_git_branch() {
 
 # prompt
 # PS1='[\u@\h \W]\$ '  # Original prompt     
-PS1="\[$White\]\d - \A \[$BIWhite\][\W]\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)$ \[$IWhite\] "
+nix_shell_indicator() {
+    if [ -n "$IN_NIX_SHELL" ]; then
+        echo -e "$BIRed NIX $Color_Off"
+    fi
+}
+PS1="\[$White\]\d - \A \[$BIWhite\][\W]\$(nix_shell_indicator)\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)\[$IWhite\] "
 
 #######################################################
 # program exports
@@ -187,6 +192,10 @@ mubrowser(){
 
 browser(){
      firefox &> /dev/null
+}
+
+chrome(){
+    mullvad-exclude chromium &> /dev/null
 }
 
 mkcd () {
@@ -248,8 +257,6 @@ fi
 #######################################################
 # Exports
 #######################################################
-# my python scripts
-export PATH="$PATH:/home/dnl/.scripts/"
 
 #for load libraries	
 export PATH=/usr/local/bin:$PATH
@@ -267,10 +274,6 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-alias run_esp32docker_usb='sudo docker run --rm -v $PWD:/project -w /project -it --device=/dev/ttyUSB0 espressif/idf'
-alias run_esp32docker='sudo docker run --rm -v $PWD:/project -w /project -it espressif/idf'
-alias draganddrop="dragonzord -a -x"
-
 dpick() {
     local args=($(pick "$1" "$(ret)") )
     vim "${args[@]}"
@@ -280,9 +283,6 @@ dgrep() {
     cgrep "$@" | cap
 }
 
-PATH="/home/dnl/.gem/ruby/2.7.0/bin:$PATH"
-PATH="/home/dnl/.gem/ruby/3.0.0/bin:$PATH"
-PATH="/home/dnl/.local/share/gem/ruby/3.0.0/bin:$PATH"
 
 #######################################################
 # cscope 
@@ -321,16 +321,12 @@ alias pimpmake='make all | ccze -A'
 alias get_idf='. /home/dnl/Documents/git/esp-idf/export.sh'
 export CPPUTEST_HOME=~/tools/cpputest
 
-export PATH=$PATH:/usr/local/go/bin
-
-export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export WORKON_HOME=$HOME/.virtualenvs   # Optional
 export VIRTUALENVWRAPPER_PYTHON=$(which python3)
 # source /home/dnl/.local/bin/virtualenvwrapper.sh
-export PATH="$PATH:/opt/mssql-tools/bin"
 
 export PROMPT_COMMAND='history -a; history -r'
 
@@ -339,4 +335,16 @@ command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 
-source /usr/share/nvm/init-nvm.sh
+# source /usr/share/nvm/init-nvm.sh
+
+export STM32_PRG_PATH=/home/dnl/STM32Cube/STM32CubeProgrammer/bin
+
+export PATH=$PATH:/opt/mssql-tools/bin
+export PATH=$PATH:/home/dnl/.gem/ruby/3.0.0/bin
+export PATH=$PATH:/home/dnl/.gem/ruby/2.7.0/bin
+export PATH=$PATH:/home/dnl/.local/share/gem/ruby/3.0.0/bin
+export PATH=$PATH:/home/dnl/.scripts/
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
+export PATH=$PATH:/home/dnl/.local/share/gem/ruby/3.2.0/bin
+export PATH=$PATH:/home/dnl/Download/JLink_Linux_V794e_x86_64
