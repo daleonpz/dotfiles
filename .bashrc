@@ -139,7 +139,7 @@ parse_git_branch() {
 # PS1='[\u@\h \W]\$ '  # Original prompt     
 nix_shell_indicator() {
     if [ -n "$IN_NIX_SHELL" ]; then
-        echo -e "$BIRed NIX $Color_Off"
+        echo -e "$BIGreen(nix)$Color_Off"
     fi
 }
 PS1="\[$White\]\d - \A \[$BIWhite\][\W]\$(nix_shell_indicator)\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)\[$IWhite\] "
