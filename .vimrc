@@ -125,6 +125,18 @@ nnoremap N Nzzzv
 " Search and replace the word under cursor
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
 
+" Paste above with <leader>p
+nnoremap <leader>p :put!<CR>
+
+" Paste below with <leader>P
+nnoremap <leader>P :put<CR>
+
+" Open Ag
+nnoremap <leader>a :Ag<CR>
+
+" Copy to clipboard
+vnoremap <Leader>y "+y
+
 " Toggle paste mode on and off using the F9 key; paste mode disables
 " auto-indenting and other automatic formatting, making it easier to paste
 " code or text from an external source
@@ -229,8 +241,9 @@ autocmd CursorHoldI * silent! TagbarRefresh
 let g:ag_working_path_mode="r"
 
 set background=dark
-set clipboard=unnamedplus
-set clipboard+=unnamed
+set clipboard=
+"set clipboard=unnamedplus
+"set clipboard+=unnamed
 
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
