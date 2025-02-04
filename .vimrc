@@ -1,4 +1,5 @@
-" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just " /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
+" All system-wide defaults are set in $VIMRUNTIME/archlinux.vim (usually just 
+" /usr/share/vim/vimfiles/archlinux.vim) and sourced by the call to :runtime
 " you can find below.  If you wish to change any of those settings, you should
 " do it in this file (/etc/vimrc), since archlinux.vim will be overwritten
 " everytime an upgrade of the vim packages is performed.  It is recommended to
@@ -39,10 +40,19 @@ set tabstop=4       " The width of a TAB is set to 4.
 set shiftwidth=4    " Indents will have a width of 4
 set softtabstop=4   " Sets the number of columns for a TAB
 set expandtab       " Expand TABs to spaces
+set scrolloff=10    " Always have at least 10 lines from bottom
 " Configure how certain whitespace characters are displayed: tabs as »»,
 " trailing spaces as ·, and non-breaking spaces as ~
 execute "set listchars=tab:\u00bb\u00bb,trail:\u00b7,nbsp:~"
 set list
+
+set ruler " Enable the ruler, which shows the cursor position
+" Customize the ruler format to display the date and time, line number, column
+" number, and percentage through the file
+" set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
+set formatoptions-=r formatoptions-=o
+
+let mapleader=" "
 
 """"""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:
@@ -53,85 +63,6 @@ set path+=**
 set path+=$HOME/.vim/**
 " Display all matching files when we tab complete
 set wildmenu
-
-""""""""""""""""""""""""""""""""
-"    PLUGINS      "
-""""""""""""""""""""""""""""""""
-set ruler " Enable the ruler, which shows the cursor position
-" Customize the ruler format to display the date and time, line number, column
-" number, and percentage through the file
-set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
-
-""""""""""""""""""""""""""""""""""""""""""
-"
-"              SNIPPETS
-"
-""""""""""""""""""""""""""""""""""""""""""
-" Read an empty HTML template and move cursor to title
-"command Fnmd  execute ":-1read $HOME/.vim/.footnote.mdmail"
-
-""""""""""""""""""""""""""""""""
-"    MARKDOWN SETTINGS      "
-""""""""""""""""""""""""""""""""
-function Dictionary(lang)
-    let b:base_path ="/home/dnl/.vim/dictionary/dict.".a:lang 
-    if filereadable(b:base_path)
-        execute "set dictionary=".b:base_path
-    else
-        echo "No existing language dictionary"
-    endif
-endfunction
-
-augroup md_settings 
-    set filetype=markdown
-    autocmd FileType markdown command DeutschNotes execute ":-1read $HOME/.vim/markdown/deutschNotes.skeleton"
-    autocmd FileType markdown vmap ** xi**<Esc>pi**<Esc>
-    autocmd FileType markdown vmap __ xi__<Esc>pi__<Esc> 
-    autocmd FileType markdown set complete+=k
-"     autocmd FileType markdown nnoremap ** :norm ea**<cr>:norm 2bi**<cr>
-"     autocmd FileType markdown nnoremap __ :norm ea__<cr>:norm bi__<cr>
-augroup END 
-
-
-""""""""""""""""""""""""""""""""
-"    VIM SETTINGS      
-""""""""""""""""""""""""""""""""
-augroup vim_settings 
-    set filetype=vim 
-    autocmd FileType vim nnoremap <silent> ,sec :-1read /home/dnl/.vim/vim/section_div.template<CR>j5li
-augroup END 
-
-
-""""""""""""""""""""""""""""""""
-"    PYTHON SETTINGS      "
-""""""""""""""""""""""""""""""""
-augroup py_settings 
-    set filetype=python
-    autocmd!
-    autocmd FileType python nnoremap <silent> ,sec :-1read $HOME/.vim/python/section_div.template<CR>j5li
-augroup END 
-
-
-""""""""""""""""""""""""""""""""
-"    C SETTINGS      "
-""""""""""""""""""""""""""""""""
-augroup c_settings 
-    set filetype=c
-    autocmd!
-    autocmd FileType c nnoremap <silent> ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
-    "autocmd FileType c command SecDiv execute ":-1read $HOME/.vim/c/section_div.template<CR>j5wi"
-augroup END 
-
-
-""""""""""""""""""""""""""""""""
-"    CPP SETTINGS      "
-""""""""""""""""""""""""""""""""
-augroup cpp_settings 
-    set filetype=cpp
-    autocmd!
-    autocmd FileType cpp nnoremap <silent> ,sec :-1read $HOME/.vim/c/section_div.template<CR>j5li
-augroup END
-
 
 """"""""""""""""""""""""""""""""
 "    MISC      "
@@ -162,9 +93,9 @@ noremap <A-Left>  :-tabmove<cr>
 noremap <A-Right> :+tabmove<cr>
 
 " Switch to hex-editor`
-noremap <S-F7> :%!xxd<CR> 
+noremap <F7> :%!xxd<CR> 
 " Switch back 
-noremap <F7> :%!xxd -r<CR>
+noremap <leader><F7> :%!xxd -r<CR>
 
 " save code blocks
 autocmd BufWinLeave *.* mkview
@@ -176,18 +107,38 @@ noremap <F6> mzgg=G`z
 " Indent block 
 noremap <F5> =i{
 
+" Move selected lines up and down in visual mode
+vnoremap J :m '>+1<CR>gv=gv
+vnoremap K :m '<-2<CR>gv=gv
+
+" Keep cursor position when joining lines
+nnoremap J mzJ`z
+
+" Keep cursor centered when scrolling
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+" Keep search results centered
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Search and replace the word under cursor
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+
 " Toggle paste mode on and off using the F9 key; paste mode disables
 " auto-indenting and other automatic formatting, making it easier to paste
 " code or text from an external source
 set pastetoggle=<F9>
 
-" show Status line + linenumber and percentage (10/100) 10%
-set statusline+=%l/%L\ (%p%%)\ %F
+" set statusline+=%l/%L\ (%p%%)\ %F
+" set statusline=%F
+set statusline=%F\ %55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 
-" source CSCOPE settings for vim 
 source ~/.vim/autoload/cscope_maps.vim
 
+" Function to search using ag within a specified path
 " AgIn: Start ag in the specified directory
+"
 " e.g.
 "   :AgIn .. foo
 function! s:ag_in(bang, ...)
@@ -202,21 +153,9 @@ function! s:ag_in(bang, ...)
 endfunction
 
 command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
-""""""""""""""""""""""""""""""""
-"    MAKE      "
-""""""""""""""""""""""""""""""""
-autocmd FileType make setlocal noexpandtab
-" nnoremap <silent> ,make :set makeprg=gcc\ -Wall\ -W\ -g\ %:t<CR> \| :make!<CR> \| :set makeprg=make<CR> \|:clist<CR>
-command! MakeGcc !gcc -Wall -W -g %
-command! MakeTags !ctags -R .
-command! Makepdf !pandoc -o %.pdf % && zathura %.pdf
+
+" Automatically change the current directory
 set autochdir
-
-" execute pathogen#infect()
-
-" set statusline+=%#warningmsg#
-" set statusline+=%{SyntasticStatuslineFlag()}
-" set statusline+=%*
 
 """"""""""""""""""""""""""""""""
 "   SYNTASTIC: LINT MANAGER    "
@@ -226,11 +165,8 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
-" Enable SPLINT
-noremap <S-F3> :let g:syntastic_c_checkers=['make','splint','cppcheck']<CR>:w<CR>
-" Switch back 
-noremap <F3> :let g:syntastic_c_checkers=['make','cppcheck']<CR>:w<CR>
 noremap <F2> :SyntasticToggleMode<CR>
+noremap <F3> :SyntasticCheck<CR>
 
 let g:syntastic_c_checkers=['make','cppcheck']
 let g:syntastic_sh_checkers=['shellcheck']
@@ -242,24 +178,21 @@ let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-package
 """"""""""""""""""""""""""""""""
 " TAGBAR PLUGIN
 """"""""""""""""""""""""""""""""
-" Toggle Tagbar with F8
-nmap <F8> :TagbarToggle<CR>
+" Toggle Tagbar
+nmap <leader>t :TagbarToggle<CR>
 " Ensure ctags is installed for better compatibility
 let g:tagbar_ctags_bin='ctags'
 let g:tagbar_width=40
+
 " Enable Tagbar to appear on the left side
 let g:tagbar_left=1
-" " Automatically open Tagbar when starting Vim or opening a file
-" autocmd VimEnter * TagbarOpen
-" autocmd BufReadPost * TagbarOpen
 
 " Reduce updatetime to make CursorHold more responsive
-set updatetime=1000
-"
+set updatetime=50
+
 " " Auto-refresh Tagbar on CursorHold and CursorHoldI
 autocmd CursorHold * silent! TagbarRefresh
 autocmd CursorHoldI * silent! TagbarRefresh
-
 
 " let g:ycm_autoclose_preview_window_after_completion=1
 " map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
@@ -295,27 +228,24 @@ autocmd CursorHoldI * silent! TagbarRefresh
 
 let g:ag_working_path_mode="r"
 
-
-" python with virtualenv support
 set background=dark
-
 set clipboard=unnamedplus
 set clipboard+=unnamed
 
+set tags=./tags,tags;/
+" tags=./tags,./TAGS,tags,TAGS
+" set cscopeprg=cscope -d
+let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
 
 """""""""""""""""""""""""""""""""""
 " PLUG: Plugin Manager            "
 """""""""""""""""""""""""""""""""""
 call plug#begin()
 Plug 'christoomey/vim-tmux-navigator'
-"Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'vim-syntastic/syntastic'
 " Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
-" Plug 'rking/ag.vim'
-" Plug 'epmatsw/ag.vim'
-" Plug 'michal-h21/vim-zettel'
 call plug#end()
