@@ -1,68 +1,35 @@
 #!/bin/bash
 
-## set dvorak layout
-loadkeys dvorak-programmer
-
-
 ## Pacman Tips
 ## https://wiki.manjaro.org/index.php?title=Pacman_Tips
-# Ranking mirrors
-pacman-mirrors -g
-pacman -Syy
-
 # Fasttrack your mirrorlist
 pacman-mirrors -f 5
-pacman -Syy
-
-# Optimize the database access speed
-pacman-optimize && sync
-
-
-# update
-pacman -Syyu
+pacman -Syu
 
 ## basic programs
-pacman -S gdb scope
+pacman -S base-devel
+pacman -S vim
+pacman -S tree
 pacman -S octopi
-pacman -S valgrind
-pacman -S tilda
-pacman -S wget  yaourt
-pacman -S vi vim vifm firejail zathura-pdf-mupdf zathura-djvu screenfetch
-pacman -S downgrade
-pacman -S emacs xournal pandoc feh
+pacman -S zathura
+pacman -S feh
 
-# Packer
-# Uses some of the same commands as pacman but differs in that it checks both the official repos & AUR.
-yaourt -S packer
-
-packer -S gcal
-packer -S texlive-most
-# packer -S texlive-lang # lang support
-packer -S transmission-cli
-packer -S transmission-qt
-
+mkdir ~/Documents/git
+cd ~/Documents/git/
 ## git clones
-mkdir ~/Documents/gitStuff
-cd ~/Documents/gitStuff/
 git clone git@github.com:daleonpz/dotfiles.git
+cd dotfiles
+cp .vimrc /etc/vimrc
+cp .bashrc ~/.bashrc
+cp .tmux.conf ~/.tmux.conf
+
 git clone git@github.com:daleonpz/dnl_tools.git
-git clone git@github.com:daleonpz/blog.git
-git clone git@github.com:daleonpz/Notes.git
-cd ~
+mkdir -p ~/.scripts
+cd dnl_tools
+cp tools/bash/* ~/.scripts
 
 
-
-## move dotfiles 
-cd ~/Documents/gitStuff/dotfiles
-sh restore_dotfiles.sh
-cd ~
-
-origin  https://github.com/jordansissel/keynav.git (push)
-origin  https://github.com/jbensmann/xmouseless.git (push)
-# patch for xmouseless with config.h
-#
 ## Install
-obsidian
 freecad
 kicad
 darktable
@@ -78,29 +45,38 @@ pcsx2
 snes9x
 
 mullvad
-bleachbit
+
+pacman -S obsidian \
+    xclip \ # clipboard copy
+    bleachbit \ # system cleaner
 
 
+# install vim plug and cscope
+curl -fLo ~/.vim/autoload/plug.vim          --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl -fLo ~/.vim/autoload/cscope_maps.vim   --create-dirs https://cscope.sourceforge.net/cscope_maps.vim
 
-# install dictionaries for vim
-# https://github.com/Haspaker/anagram.tips
+# to install copilot
+# review https://github.com/github/copilot.vim
 
+# to install nix
+sh <(curl -L https://nixos.org/nix/install) --daemon
+mkdir -p ~/.config/nix
+cp nix.conf ~/.config/nix
 
-# install valgrind for python 
-# https://stackoverflow.com/questions/20112989/how-to-use-valgrind-with-python
-# https://github.com/enthought/Python-2.7.3
+# Install keynav
+sudo pacman -S cairo libxinerama xdotool
+git clone https://github.com/jordansissel/keynav.git ~/Documents/git/keynav
+cd ~/Documents/git/keynav
+make -j$(nproc)
+make install
+cd -
 
-# install translator
-# https://github.com/soimort/translate-shell 
+cp .keynavrc ~/
+cp .xprofile ~/
 
-## in firefox
-# vimperator
-# privacy-badger
-# https Everywhere
-# adblock
-# adblock for youtube
-# noscript
-# disconnect
-# self destructing cookies
-# bloody vikings
-
+git clone https://github.com/jbensmann/xmouseless.git ~/Documents/git/xmouseless
+cp xmouseless_config.h ~/Documents/git/xmouseless/config.h
+cd ~/Documents/git/xmouseless/ 
+make -j$(nproc)
+make install
+cd -
