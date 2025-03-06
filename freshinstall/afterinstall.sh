@@ -7,12 +7,22 @@ pacman-mirrors -f 5
 pacman -Syu
 
 ## basic programs
+pacman -S git
 pacman -S base-devel
-pacman -S vim
+pacman -S gvim
+pacman -S tmux
+pacman -S cscope ctags
 pacman -S tree
 pacman -S octopi
 pacman -S zathura
 pacman -S feh
+
+## development tools
+pacman -S fzf \
+        the_silver_searcher \
+        astyle \
+        clang \
+        cppcheck \
 
 mkdir ~/Documents/git
 cd ~/Documents/git/
@@ -30,26 +40,23 @@ cp tools/bash/* ~/.scripts
 
 
 ## Install
-freecad
-kicad
-darktable
-
-docker
-docker desktop
-docker scout
-
-solaar
-
-mednaffe
-pcsx2
-snes9x
-
-mullvad
-
 pacman -S obsidian \
     xclip \ # clipboard copy
     bleachbit \ # system cleaner
+    freecad \ # CAD
+    kicad \ # electronics
+    darktable \ # photo editor
 
+# docker
+# docker desktop
+# docker scout
+# 
+# solaar
+# 
+flatpak install flathub com.github.AmatCoder.mednaffe # emulator
+# pcsx2
+pacman -S snes9x
+# mullvad
 
 # install vim plug and cscope
 curl -fLo ~/.vim/autoload/plug.vim          --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
