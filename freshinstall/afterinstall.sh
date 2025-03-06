@@ -71,6 +71,15 @@ docker
 docker desktop
 docker scout
 
+solaar
+
+mednaffe
+pcsx2
+snes9x
+
+mullvad
+bleachbit
+
 
 
 # install dictionaries for vim
