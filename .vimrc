@@ -63,6 +63,7 @@ set path+=**
 set path+=$HOME/.vim/**
 " Display all matching files when we tab complete
 set wildmenu
+set incsearch
 
 """"""""""""""""""""""""""""""""
 "    MISC      "
@@ -80,8 +81,8 @@ augroup PatchDiffHighlight
 augroup END
 
 " add comments
-autocmd FileType c,cpp,cs,java,scala,javascript let b:comment_leader = '// '
-autocmd FileType sh,ruby,python   let b:comment_leader = '# '
+autocmd FileType c,cpp,cs,java,scala,javascript,dts let b:comment_leader = '// '
+autocmd FileType sh,ruby,nix,python   let b:comment_leader = '# '
 autocmd FileType conf,fstab,yml,yaml,cmake       let b:comment_leader = '# '
 autocmd FileType tex              let b:comment_leader = '% '
 autocmd FileType mail             let b:comment_leader = '> '
@@ -248,7 +249,7 @@ set clipboard=
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
-let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+" let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
 
 """""""""""""""""""""""""""""""""""
 " PLUG: Plugin Manager            "
