@@ -57,6 +57,22 @@ cd ~/Documents/gitStuff/dotfiles
 sh restore_dotfiles.sh
 cd ~
 
+origin  https://github.com/jordansissel/keynav.git (push)
+origin  https://github.com/jbensmann/xmouseless.git (push)
+# patch for xmouseless with config.h
+#
+## Install
+obsidian
+freecad
+kicad
+darktable
+
+docker
+docker desktop
+docker scout
+
+
+
 # install dictionaries for vim
 # https://github.com/Haspaker/anagram.tips
 
