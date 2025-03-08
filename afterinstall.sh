@@ -7,15 +7,14 @@ pacman-mirrors -f 5
 pacman -Syu
 
 ## basic programs
-pacman -S git
-pacman -S base-devel
-pacman -S gvim
-pacman -S tmux
-pacman -S cscope ctags
-pacman -S tree
-pacman -S octopi
-pacman -S zathura
-pacman -S feh
+pacman -S git \
+    base-devel \
+    gvim \
+    tmux \
+    tree \
+    octopi \
+    zathura \
+    feh
 
 ## development tools
 pacman -S fzf \
@@ -23,24 +22,10 @@ pacman -S fzf \
         astyle \
         clang \
         cppcheck \
+        cscope ctags \
 
-mkdir ~/Documents/git
-cd ~/Documents/git/
-## git clones
-git clone git@github.com:daleonpz/dotfiles.git
-cd dotfiles
-cp .vimrc /etc/vimrc
-cp .bashrc ~/.bashrc
-cp .tmux.conf ~/.tmux.conf
-
-git clone git@github.com:daleonpz/dnl_tools.git
-mkdir -p ~/.scripts
-cd dnl_tools
-cp tools/bash/* ~/.scripts
-
-
-## Install
-pacman -S obsidian \
+## Install extras
+pacman -S obsidian \ # note taking
     xclip \ # clipboard copy
     bleachbit \ # system cleaner
     freecad \ # CAD
@@ -58,6 +43,27 @@ flatpak install flathub com.github.AmatCoder.mednaffe # emulator
 pacman -S snes9x
 # mullvad
 
+## setup git
+GIT_DIR=~/Documents/git
+DOTFILES_DIR=$GIT_DIR/dotfiles
+mkdir -p $GIT_DIR
+cd $GIT_DIR
+
+## update dotfiles
+git clone git@github.com:daleonpz/dotfiles.git
+cd dotfiles
+cp .vimrc /etc/vimrc
+cp .bashrc ~/.bashrc
+cp .tmux.conf ~/.tmux.conf
+cp .gitconfig ~/.gitconfig
+cp .gitignore ~/.gitignore
+
+cd $GIT_DIR
+git clone git@github.com:daleonpz/dnl_tools.git
+cd dnl_tools
+mkdir -p ~/.scripts
+cp tools/bash/* ~/.scripts
+
 # install vim plug and cscope
 curl -fLo ~/.vim/autoload/plug.vim          --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl -fLo ~/.vim/autoload/cscope_maps.vim   --create-dirs https://cscope.sourceforge.net/cscope_maps.vim
@@ -68,22 +74,25 @@ curl -fLo ~/.vim/autoload/cscope_maps.vim   --create-dirs https://cscope.sourcef
 # to install nix
 sh <(curl -L https://nixos.org/nix/install) --daemon
 mkdir -p ~/.config/nix
-cp nix.conf ~/.config/nix
+cd $DOTFILES_DIR
+cp nix.conf ~/.config/nix/nix.conf
 
 # Install keynav
 sudo pacman -S cairo libxinerama xdotool
-git clone https://github.com/jordansissel/keynav.git ~/Documents/git/keynav
-cd ~/Documents/git/keynav
+cd $GIT_DIR
+git clone https://github.com/jordansissel/keynav.git
+cd keynav
 make -j$(nproc)
 make install
-cd -
 
+# Install xmouseless
+cd $GIT_DIR
+git clone https://github.com/jbensmann/xmouseless.git
+cd xmouseless
+cp $DOTFILES_DIR/xmouseless_config.h config.h
+make -j$(nproc)
+make install
+
+cd $DOTFILES_DIR
 cp .keynavrc ~/
 cp .xprofile ~/
-
-git clone https://github.com/jbensmann/xmouseless.git ~/Documents/git/xmouseless
-cp xmouseless_config.h ~/Documents/git/xmouseless/config.h
-cd ~/Documents/git/xmouseless/ 
-make -j$(nproc)
-make install
-cd -
