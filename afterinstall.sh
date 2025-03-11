@@ -30,6 +30,7 @@ pacman -S obsidian \ # note taking
     bleachbit \ # system cleaner
     freecad \ # CAD
     kicad \ # electronics
+    kicad-library \ # electronics library
     darktable \ # photo editor
 
 # docker
