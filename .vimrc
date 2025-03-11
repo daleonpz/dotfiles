@@ -253,7 +253,7 @@ let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
-let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+" let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
 
 """"""""""""""""""""""""""""""""
 " UNDO PLUGIN
