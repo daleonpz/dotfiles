@@ -54,6 +54,11 @@ set formatoptions-=r formatoptions-=o
 
 let mapleader=" "
 
+set background=dark
+set clipboard=
+"set clipboard=unnamedplus
+"set clipboard+=unnamed
+
 """"""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:
 """"""""""""""""""""""""""""""""""""""""""
@@ -173,6 +178,7 @@ endfunction
 
 command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
 
+let g:ag_working_path_mode="r"
 
 " Each project should have its .vim_session
 " Function to find the root directory based on .vim_session
@@ -203,8 +209,8 @@ function! RestoreSession()
 endfunction
 
 " Key mappings for saving and restoring sessions
-nnoremap <leader>s :call SaveSession()<CR>
-nnoremap <leader>r :call RestoreSession()<CR>
+nnoremap <leader>ss :call SaveSession()<CR>
+nnoremap <leader>rs :call RestoreSession()<CR>
 
 " Automatically change the current directory
 set autochdir
@@ -228,28 +234,12 @@ set updatetime=50
 autocmd CursorHold * silent! TagbarRefresh
 autocmd CursorHoldI * silent! TagbarRefresh
 
+""""""""""""""""""""""""""""""""
+" YCM PLUGIN
+""""""""""""""""""""""""""""""""
 " let g:ycm_autoclose_preview_window_after_completion=1
 map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 map <leader>r  :YcmCompleter GoToReferences<CR>
-
-"Toggle YouCompleteMe on and off with F3
-function Toggle_ycm()
-    if g:ycm_show_diagnostics_ui == 0
-        let g:ycm_auto_trigger = 1
-        let g:ycm_show_diagnostics_ui = 1
-        :YcmRestartServer
-        :e
-        :echo "YCM on"
-    elseif g:ycm_show_diagnostics_ui == 1
-        let g:ycm_auto_trigger = 0
-        let g:ycm_show_diagnostics_ui = 0
-        :YcmRestartServer
-        :e
-        :echo "YCM off"
-    endif
-endfunction
-map <leader>l :call Toggle_ycm() <CR>
-
 
 let g:ycm_python_interpreter_path = ''
 let g:ycm_python_sys_path = []
@@ -260,30 +250,24 @@ let g:ycm_extra_conf_vim_data = [
 let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 
 
-let g:ag_working_path_mode="r"
-
-set background=dark
-set clipboard=
-"set clipboard=unnamedplus
-"set clipboard+=unnamed
-
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
-" let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
 
-
+""""""""""""""""""""""""""""""""
+" UNDO PLUGIN
+""""""""""""""""""""""""""""""""
 nnoremap <leader>u :UndotreeToggle<CR>
 " vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
 if !isdirectory($HOME."/.vim")
-	    call mkdir($HOME."/.vim", "", 0770)
+    call mkdir($HOME."/.vim", "", 0770)
 endif
 if !isdirectory($HOME."/.vim/undodir")
-	    call mkdir($HOME."/.vim/undodir", "", 0700)
+    call mkdir($HOME."/.vim/undodir", "", 0700)
 endif
 set undodir=~/.vim/undodir
 set undofile
-
 
 """""""""""""""""""""""""""""""""""
 " PLUG: Plugin Manager            "
