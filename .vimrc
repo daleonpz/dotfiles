@@ -54,6 +54,11 @@ set formatoptions-=r formatoptions-=o
 
 let mapleader=" "
 
+set background=dark
+set clipboard=
+"set clipboard=unnamedplus
+"set clipboard+=unnamed
+
 """"""""""""""""""""""""""""""""""""""""""
 " FINDING FILES:
 """"""""""""""""""""""""""""""""""""""""""
@@ -135,6 +140,12 @@ nnoremap <leader>P :put<CR>
 " Open Ag
 nnoremap <leader>a :Ag<CR>
 
+" Open Files
+nnoremap <leader>f :Files<CR>
+
+" Open File explorer
+nnoremap <leader>pv :Ex<CR>
+
 " Copy to clipboard
 vnoremap <Leader>y "+y
 
@@ -167,6 +178,7 @@ endfunction
 
 command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
 
+let g:ag_working_path_mode="r"
 
 " Each project should have its .vim_session
 " Function to find the root directory based on .vim_session
@@ -197,29 +209,11 @@ function! RestoreSession()
 endfunction
 
 " Key mappings for saving and restoring sessions
-nnoremap <leader>s :call SaveSession()<CR>
-nnoremap <leader>r :call RestoreSession()<CR>
+nnoremap <leader>ss :call SaveSession()<CR>
+nnoremap <leader>rs :call RestoreSession()<CR>
 
 " Automatically change the current directory
 set autochdir
-
-""""""""""""""""""""""""""""""""
-"   SYNTASTIC: LINT MANAGER    "
-""""""""""""""""""""""""""""""""
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-noremap <F2> :SyntasticToggleMode<CR>
-noremap <F3> :SyntasticCheck<CR>
-
-let g:syntastic_c_checkers=['make','cppcheck']
-let g:syntastic_sh_checkers=['shellcheck']
-let g:syntastic_cmake_checkers=['cmakelint']
-let g:syntastic_python_checkers=['mypy']
-let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
-" let g:syntastic_c_cppcheck_args=['--enable=all']
 
 """"""""""""""""""""""""""""""""
 " TAGBAR PLUGIN
@@ -240,49 +234,40 @@ set updatetime=50
 autocmd CursorHold * silent! TagbarRefresh
 autocmd CursorHoldI * silent! TagbarRefresh
 
+""""""""""""""""""""""""""""""""
+" YCM PLUGIN
+""""""""""""""""""""""""""""""""
 " let g:ycm_autoclose_preview_window_after_completion=1
-" map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" map <leader>r  :YcmCompleter GoToReferences<CR>
-" 
-" "Toggle YouCompleteMe on and off with F3
-" function Toggle_ycm()
-"     if g:ycm_show_diagnostics_ui == 0
-"         let g:ycm_auto_trigger = 1
-"         let g:ycm_show_diagnostics_ui = 1
-"         :YcmRestartServer
-"         :e
-"         :echo "YCM on"
-"     elseif g:ycm_show_diagnostics_ui == 1
-"         let g:ycm_auto_trigger = 0
-"         let g:ycm_show_diagnostics_ui = 0
-"         :YcmRestartServer
-"         :e
-"         :echo "YCM off"
-"     endif
-" endfunction
-" map <leader>y :call Toggle_ycm() <CR>
-" 
+map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+map <leader>r  :YcmCompleter GoToReferences<CR>
 
-" let g:ycm_python_interpreter_path = ''
-" let g:ycm_python_sys_path = []
-" let g:ycm_extra_conf_vim_data = [
-"   \  'g:ycm_python_interpreter_path',
-"   \  'g:ycm_python_sys_path'
-"   \]
-" let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
-" 
+let g:ycm_python_interpreter_path = ''
+let g:ycm_python_sys_path = []
+let g:ycm_extra_conf_vim_data = [
+  \  'g:ycm_python_interpreter_path',
+  \  'g:ycm_python_sys_path'
+  \]
+let g:ycm_global_ycm_extra_conf = '~/global_extra_conf.py'
 
-let g:ag_working_path_mode="r"
-
-set background=dark
-set clipboard=
-"set clipboard=unnamedplus
-"set clipboard+=unnamed
 
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
 " let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+
+""""""""""""""""""""""""""""""""
+" UNDO PLUGIN
+""""""""""""""""""""""""""""""""
+nnoremap <leader>u :UndotreeToggle<CR>
+" vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+if !isdirectory($HOME."/.vim")
+    call mkdir($HOME."/.vim", "", 0770)
+endif
+if !isdirectory($HOME."/.vim/undodir")
+    call mkdir($HOME."/.vim/undodir", "", 0700)
+endif
+set undodir=~/.vim/undodir
+set undofile
 
 """""""""""""""""""""""""""""""""""
 " PLUG: Plugin Manager            "
@@ -292,7 +277,8 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
-Plug 'vim-syntastic/syntastic'
-" Plug 'ycm-core/YouCompleteMe'
+Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
+Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
 call plug#end()
