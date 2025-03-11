@@ -1,5 +1,5 @@
 if [ -f /etc/bash_completion ]; then
-	    . /etc/bash_completion
+    . /etc/bash_completion
 fi
 
 xhost +local:root > /dev/null 2>&1
@@ -18,10 +18,28 @@ shopt -s histappend
 shopt -s hostcomplete
 shopt -s nocaseglob
 
+#######################################################
+# Exports
+#######################################################
 export HISTSIZE=10000
 export HISTFILESIZE=${HISTSIZE}
 export HISTCONTROL=ignoreboth
+export EDITOR=vim
+export VISUAL="vim"
+export SUDO_EDITOR=/usr/bin/vim
+export PATH=/usr/local/bin:$PATH
+export CPATH=/usr/local/include:$CPATH
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PROMPT_COMMAND='history -a; history -r'
+export PATH=$PATH:/home/dnl/.scripts/
 
+#######################################################
+# alias
+#######################################################
+alias execjekyll='bundle exec jekyll serve'
+alias ctagsbuild='ctags -R .'
 alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
 alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
@@ -31,34 +49,11 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fehslides='feh -r -F -V -d -Z'
-alias smartsnips='SmartSnippets_Studio &> /dev/null'
 
-# ex - archive extractor
-# usage: ex <file>
-ex ()
-{
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)   tar xjf $1   ;;
-      *.tar.gz)    tar xzf $1   ;;
-      *.bz2)       bunzip2 $1   ;;
-      *.rar)       unrar x $1     ;;
-      *.gz)        gunzip $1    ;;
-      *.tar)       tar xf $1    ;;
-      *.tbz2)      tar xjf $1   ;;
-      *.tgz)       tar xzf $1   ;;
-      *.zip)       unzip $1     ;;
-      *.Z)         uncompress $1;;
-      *.7z)        7z x $1      ;;
-      *)           echo "'$1' cannot be extracted via ex()" ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
 
 #########################################################3
-# Reset
+# Prompt
+#########################################################3
 Color_Off='\e[0m'       # Text Reset
 
 # Regular Colors
@@ -144,31 +139,6 @@ nix_shell_indicator() {
 }
 PS1="\[$White\]\d - \A \[$BIWhite\][\W]\$(nix_shell_indicator)\n\[$BIYellow\][Jobs:\j] \u@\h \[$BIGreen\]\$(parse_git_branch)\[$IWhite\] "
 
-#######################################################
-# program exports
-#######################################################
-export EDITOR=vim
-export VISUAL="vim"
-export SUDO_EDITOR=/usr/bin/vim
-
-#######################################################
-# alias
-#######################################################
-alias apagar='sudo shutdown -P now' 
-alias setvolume='amixer set Master'
-alias matlab_terminal='matlab -nodesktop'
-alias rmdir='rm -rf'
-alias gccWg='gcc -W -Wall -g3'
-alias valgdb='valgrind --vgdb-error=0'
-alias execjekyll='bundle exec jekyll serve'
-alias pdb2.7='python2.7 -m pdb'
-valpyPath="/home/dnl/Documents/gitStuff/Python-2.7.3"
-alias valgrindpy='valgrind --suppressions=$valpyPath/Misc/valgrind-python.supp $valpyPath/bin/python2.7'
-alias ctagsbuild='ctags -R .'
-alias translate='trans -b'
-alias filemanager='cd "$(/bin/vifm --choose-dir - $@)"'
-alias fjfirefox='firejail --seccomp --private --dns=8.8.8.8 --dns=8.8.4.4 firefox -no-remote'
-alias diamond_lattice='/home/dnl/diamond_lattice/usr/local/diamond/3.10_x64/bin/lin64/diamond'
 
 
 #######################################################
@@ -180,6 +150,29 @@ cap () { tee /tmp/capture.out; }
 # return the output of the most recent command that was captured by cap
 ret () { cat /tmp/capture.out; }
 
+# ex - archive extractor
+# usage: ex <file>
+ex ()
+{
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1   ;;
+      *.tar.gz)    tar xzf $1   ;;
+      *.bz2)       bunzip2 $1   ;;
+      *.rar)       unrar x $1     ;;
+      *.gz)        gunzip $1    ;;
+      *.tar)       tar xf $1    ;;
+      *.tbz2)      tar xjf $1   ;;
+      *.tgz)       tar xzf $1   ;;
+      *.zip)       unzip $1     ;;
+      *.Z)         uncompress $1;;
+      *.7z)        7z x $1      ;;
+      *)           echo "'$1' cannot be extracted via ex()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
 opendocument(){
     zathura "$*" &> /dev/null 
 }
@@ -218,62 +211,6 @@ pomodoro_break_30_10 (){
     sleep 30m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 600
 }
 
-makepdfdir(){
-    
-    if [ -z "$1" ] 
-    then
-        echo "usage: "
-        echo "        makepdfdir DOCTITLE [optional:FILENAME]"
-        return 0
-    fi
-
-    if [ "$2" ]
-    then
-        filename=$2
-    else
-        filename="notes.pdf"
-    fi
-
-    notes=$(find . -name '*.md' -exec echo {} \; | sort)
-    echo "The following notes were found"
-    echo $notes
-    echo "Generating pdf..."
-    pandoc --toc -s \
-                -V toc-title:"Table of Contents"  \
-                -V documentclass=report \
-                -V title:$1 \
-                $notes  -o $filename
-   echo "Done: "$filename
-}
-
-
-# fzf autocompletion aktivieren
-if [ -x "$(command -v fzf)"  ]
-then
-    source /usr/share/fzf/key-bindings.bash
-    source /usr/share/fzf/completion.bash
-fi
-
-#######################################################
-# Exports
-#######################################################
-
-#for load libraries	
-export PATH=/usr/local/bin:$PATH
-export PATH=/opt/mpich/bin:$PATH
-export PATH=/usr/gnat-elf/bin:$PATH
-# export PATH=/usr/gnat/bin:$PATH
-
-export CPATH=/usr/local/include:$CPATH
-export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
-export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
-export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
-
-
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
-
 dpick() {
     local args=($(pick "$1" "$(ret)") )
     vim "${args[@]}"
@@ -283,9 +220,38 @@ dgrep() {
     cgrep "$@" | cap
 }
 
+#######################################################
+# fzf
+#######################################################
+# fzf autocompletion aktivieren
+if [ -x "$(command -v fzf)"  ]
+then
+    source /usr/share/fzf/key-bindings.bash
+    source /usr/share/fzf/completion.bash
+fi
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+if [ -f ~/.git-completion.bash ]; then
+  . ~/.git-completion.bash
+fi
 
 #######################################################
-# cscope 
+# Exports
+#######################################################
+export PATH=/usr/local/bin:$PATH
+export CPATH=/usr/local/include:$CPATH
+export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
+export LD_LIBRARY_PATH=/usr/local/lib:$LD_LIBRARY_PATH
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig:$PKG_CONFIG_PATH
+export PROMPT_COMMAND='history -a; history -r'
+export PATH=$PATH:/home/dnl/.scripts/
+export EDITOR=vim
+export VISUAL="vim"
+export SUDO_EDITOR=/usr/bin/vim
+
+#######################################################
+# cscope and ctags
 #######################################################
 function build_cscope_db_func()
  {
@@ -301,6 +267,7 @@ function build_cscope_db_func()
   cscope -RCbk
   export CSCOPE_DB=$PWD/cscope.out
 }
+
 alias csbuild=build_cscope_db_func
 
 function cscope_export_db_func()
@@ -308,43 +275,11 @@ function cscope_export_db_func()
    export CSCOPE_DB=$PWD/cscope.out
 }
 alias csexport=cscope_export_db_func
-
 alias tagsbuild='csbuild && ctagsbuild'
-alias pman='postman &> /dev/null'
-alias strail='sourcetrail &> /dev/null'
+
 #######################################################
-# Embedded related aliases 
+# NVM
 #######################################################
-alias pimpmake='make all | ccze -A'
-
-
-alias get_idf='. /home/dnl/Documents/git/esp-idf/export.sh'
-export CPPUTEST_HOME=~/tools/cpputest
-
-
-[ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-export WORKON_HOME=$HOME/.virtualenvs   # Optional
-export VIRTUALENVWRAPPER_PYTHON=$(which python3)
-# source /home/dnl/.local/bin/virtualenvwrapper.sh
-
-export PROMPT_COMMAND='history -a; history -r'
-
-export PYENV_ROOT="$HOME/.pyenv"
-command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-
-# source /usr/share/nvm/init-nvm.sh
-
-export STM32_PRG_PATH=/home/dnl/STM32Cube/STM32CubeProgrammer/bin
-
-export PATH=$PATH:/opt/mssql-tools/bin
-export PATH=$PATH:/home/dnl/.gem/ruby/3.0.0/bin
-export PATH=$PATH:/home/dnl/.gem/ruby/2.7.0/bin
-export PATH=$PATH:/home/dnl/.local/share/gem/ruby/3.0.0/bin
-export PATH=$PATH:/home/dnl/.scripts/
-export PATH=$PATH:/usr/local/go/bin
-export PATH=$PATH:/opt/st/stm32cubeide_1.8.0
-export PATH=$PATH:/home/dnl/.local/share/gem/ruby/3.2.0/bin
-export PATH=$PATH:/home/dnl/Download/JLink_Linux_V794e_x86_64
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
