@@ -1,0 +1,39 @@
+[alias]
+    cm = commit -m
+    s = status
+    ss = status -s
+[core]
+    editor = vim
+    autocrlf = input
+    excludesfile = ~/.gitignore
+[push]
+    default = simple
+    autoSetupMerge = true
+    followTags = true
+[credential]
+    helper = store
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+[user]
+    email = daleonpz@gmail.com
+    name = dnl
+[safe]
+    directory = *
+[branch]
+    sort = -committerdate
+[tag]
+    sort = version:refname
+[diff]
+    algorithm = histogram
+    colorMoved = plain
+    mnemonicPrefix = true
+    renames = true
+[commit]
+    verbose = true
+[fetch]
+    prune = true
+    pruneTags = true
+    all = true

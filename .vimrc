@@ -167,6 +167,39 @@ endfunction
 
 command! -bang -nargs=+ -complete=dir AgIn call s:ag_in(<bang>0, <f-args>)
 
+
+" Each project should have its .vim_session
+" Function to find the root directory based on .vim_session
+function! FindProjectRoot()
+    let l:dir = getcwd()
+    while l:dir !=# '/' && !filereadable(l:dir . '/.vim_session')
+        let l:dir = fnamemodify(l:dir, ':h')
+    endwhile
+    return (filereadable(l:dir . '/.vim_session')) ? l:dir : getcwd()
+endfunction
+
+" Function to save session in the project root
+function! SaveSession()
+    let l:root = FindProjectRoot()
+    execute 'mksession! ' . l:root . '/.vim_session'
+    echo "Session saved in " . l:root
+endfunction
+
+" Function to restore session from the project root
+function! RestoreSession()
+    let l:root = FindProjectRoot()
+    if filereadable(l:root . '/.vim_session')
+        execute 'source ' . l:root . '/.vim_session'
+        echo "Session restored from " . l:root
+    else
+        echo "No session file found in " . l:root
+    endif
+endfunction
+
+" Key mappings for saving and restoring sessions
+nnoremap <leader>s :call SaveSession()<CR>
+nnoremap <leader>r :call RestoreSession()<CR>
+
 " Automatically change the current directory
 set autochdir
 

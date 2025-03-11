@@ -1,0 +1,6 @@
+# vim files
+*.swp
+
+# tags
+cscope.*
+tags
