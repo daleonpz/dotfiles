@@ -210,24 +210,6 @@ nnoremap <leader>r :call RestoreSession()<CR>
 set autochdir
 
 """"""""""""""""""""""""""""""""
-"   SYNTASTIC: LINT MANAGER    "
-""""""""""""""""""""""""""""""""
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-
-noremap <F2> :SyntasticToggleMode<CR>
-noremap <F3> :SyntasticCheck<CR>
-
-let g:syntastic_c_checkers=['cppcheck','clang']
-let g:syntastic_sh_checkers=['shellcheck']
-let g:syntastic_cmake_checkers=['cmakelint']
-let g:syntastic_python_checkers=['mypy']
-let g:syntastic_python_mypy_args=['--ignore-missing-imports', '--no-site-packages']
-" let g:syntastic_c_cppcheck_args=['--enable=all']
-
-""""""""""""""""""""""""""""""""
 " TAGBAR PLUGIN
 """"""""""""""""""""""""""""""""
 " Toggle Tagbar
@@ -288,7 +270,7 @@ set clipboard=
 set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
-let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+" let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
 
 
 nnoremap <leader>u :UndotreeToggle<CR>
@@ -311,7 +293,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
-" Plug 'vim-syntastic/syntastic'
 Plug 'ycm-core/YouCompleteMe'
 Plug 'github/copilot.vim'
 Plug 'mbbill/undotree'
