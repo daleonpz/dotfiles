@@ -1,6 +1,13 @@
 # vim files
 *.swp
+.vim_session
 
 # tags
 cscope.*
 tags
+
+# kicad
+*.lck
+fp-lib-table
+fp-info-cache
+sym-lib-table
