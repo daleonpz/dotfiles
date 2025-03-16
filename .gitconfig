@@ -10,6 +10,7 @@
     default = simple
     autoSetupMerge = true
     followTags = true
+    autoSetupRemote = true
 [credential]
     helper = store
 [filter "lfs"]

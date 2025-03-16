@@ -24,6 +24,10 @@ pacman -S fzf \
         cppcheck \
         cscope ctags \
 
+## For YouCompleteMe 
+pacman -S cmake \
+        ninja \
+
 ## Install extras
 pacman -S obsidian \ # note taking
     xclip \ # clipboard copy
