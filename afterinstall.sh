@@ -14,6 +14,7 @@ pacman -S git \
     tree \
     octopi \
     zathura \
+    zathura-pdf-mupdf \
     feh
 
 ## development tools
