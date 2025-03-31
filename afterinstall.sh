@@ -24,6 +24,7 @@ pacman -S fzf \
         clang \
         cppcheck \
         cscope ctags \
+        minicom \
 
 ## For YouCompleteMe 
 pacman -S cmake \
