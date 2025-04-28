@@ -52,6 +52,8 @@ set ruler " Enable the ruler, which shows the cursor position
 " set rulerformat=%55(%{strftime('%a\ %b\ %e\ %I:%M\ %p')}\ %5l,%-6(%c%V%)\ %P%)
 set formatoptions-=r formatoptions-=o
 
+set showcmd
+
 let mapleader=" "
 
 set background=dark
