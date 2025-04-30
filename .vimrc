@@ -151,6 +151,10 @@ nnoremap <leader>pv :Ex<CR>
 " Copy to clipboard
 vnoremap <Leader>y "+y
 
+" Add apache banner
+command! ApacheBanner read ~/.vim/templates/apache_banner.txt
+nnoremap <Leader>ab :ApacheBanner<CR>
+
 " Toggle paste mode on and off using the F9 key; paste mode disables
 " auto-indenting and other automatic formatting, making it easier to paste
 " code or text from an external source
