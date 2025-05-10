@@ -56,7 +56,10 @@ set showcmd
 
 let mapleader=" "
 
-set background=dark
+" set background=dark
+set background=light
+colorscheme desert " vim-polyglot needed
+
 set clipboard=
 "set clipboard=unnamedplus
 "set clipboard+=unnamed
@@ -152,7 +155,7 @@ nnoremap <leader>pv :Ex<CR>
 vnoremap <Leader>y "+y
 
 " Add apache banner
-command! ApacheBanner read ~/.vim/templates/apache_banner.txt
+command! ApacheBanner -1read ~/.vim/templates/apache_banner.txt
 nnoremap <Leader>ab :ApacheBanner<CR>
 
 " Toggle paste mode on and off using the F9 key; paste mode disables
