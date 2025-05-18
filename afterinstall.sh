@@ -8,6 +8,7 @@ pacman -Syu
 
 ## basic programs
 pacman -S git \
+    git-lfs \
     base-devel \
     gvim \
     tmux \
