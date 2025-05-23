@@ -8,6 +8,7 @@ pacman -Syu
 
 ## basic programs
 pacman -S git \
+    python-pre-commit \
     git-lfs \
     base-devel \
     gvim \
