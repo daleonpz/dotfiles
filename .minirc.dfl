@@ -1,0 +1,6 @@
+pu linewrap        Yes
+pu line_timestamp   extended
+pu rtscts          No
+pu mfcolor          RED
+pu mbcolor          CYAN
+pu sfcolor          BLACK
