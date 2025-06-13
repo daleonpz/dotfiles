@@ -25,7 +25,7 @@ export HISTSIZE=10000
 export HISTFILESIZE=${HISTSIZE}
 export HISTCONTROL=ignoreboth
 export EDITOR=vim
-export VISUAL="vim"
+export VISUAL=vim
 export SUDO_EDITOR=/usr/bin/vim
 export PATH=/usr/local/bin:$PATH
 export CPATH=/usr/local/include:$CPATH
@@ -40,9 +40,8 @@ export PATH=$PATH:/home/dnl/.scripts/
 #######################################################
 alias execjekyll='bundle exec jekyll serve'
 alias ctagsbuild='ctags -R .'
-alias ls='ls --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
-alias ll='ls -l --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
-alias la='ls -la --group-directories-first --time-style=+"%d.%m.%Y %H:%M" --color=auto -F'
+alias ll='eza -l --icons'
+alias la='eza -la --icons'
 alias grep='grep --color=tty -d skip'
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
@@ -283,3 +282,15 @@ alias tagsbuild='csbuild && ctagsbuild'
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+########################################################
+# YAZI
+########################################################
+function y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
+    rm -f -- "$tmp"
+}
+

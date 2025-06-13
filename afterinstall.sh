@@ -17,7 +17,10 @@ pacman -S git \
     octopi \
     zathura \
     zathura-pdf-mupdf \
-    feh
+    feh \
+    eza \ # ls replacement
+    yazi \ # file manager
+
 
 ## development tools
 pacman -S fzf \
