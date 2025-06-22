@@ -325,5 +325,3 @@ function y() {
     [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
     rm -f -- "$tmp"
 }
-
-export STM32_PRG_PATH=/home/dnl/Documents/git/wearable_bruxism/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
