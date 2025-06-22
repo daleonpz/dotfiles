@@ -24,6 +24,7 @@ pacman -S git \
     bat \ # cat replacement
     fd \ # find replacement
     git-delta \
+    tig \
 
 ## development tools
 pacman -S fzf \
