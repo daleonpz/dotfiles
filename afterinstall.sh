@@ -13,7 +13,6 @@ pacman -S git \
     base-devel \
     gvim \
     tmux \
-    tree \
     octopi \
     zathura \
     zathura-pdf-mupdf \

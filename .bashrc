@@ -42,6 +42,8 @@ alias execjekyll='bundle exec jekyll serve'
 alias ctagsbuild='ctags -R .'
 alias ll='eza -l --icons'
 alias la='eza -la --icons'
+alias ls='eza --icons --group-directories-first --color=always'
+alias tree='eza --tree -la --icons'
 alias grep='grep --color=tty -d skip'
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
@@ -49,6 +51,14 @@ alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fehslides='feh -r -F -V -d -Z'
 
+alias gss='git status'
+alias gco='git checkout'
+alias gcb='git checkout -b'
+alias gcm='git commit -m'
+alias gps='git push'
+alias gpl='git pull'
+alias ga='git add'
+alias gdiff='git diff'
 
 #########################################################3
 # Prompt
