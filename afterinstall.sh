@@ -20,7 +20,10 @@ pacman -S git \
     feh \
     eza \ # ls replacement
     yazi \ # file manager
-
+    ripgrep \ # search tool
+    bat \ # cat replacement
+    fd \ # find replacement
+    git-delta \
 
 ## development tools
 pacman -S fzf \

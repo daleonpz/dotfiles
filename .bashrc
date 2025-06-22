@@ -143,11 +143,6 @@ PS1="\[$White\]\d - \A \[$BIWhite\][\W]\$(nix_shell_indicator)\n\[$BIYellow\][Jo
 #######################################################
 # functions
 #######################################################
-# capture the output of a command so it can be retrieved with ret
-cap () { tee /tmp/capture.out; }
-
-# return the output of the most recent command that was captured by cap
-ret () { cat /tmp/capture.out; }
 
 # ex - archive extractor
 # usage: ex <file>
@@ -210,13 +205,50 @@ pomodoro_break_30_10 (){
     sleep 30m && xfce4-terminal --fullscreen --font=150 -x break_reminder.sh countdown 600
 }
 
+# capture the output of a command so it can be retrieved with ret
+cap () { tee /tmp/capture.out; }
+
+# return the output of the most recent command that was captured by cap
+ret () { cat /tmp/capture.out; }
+
 dpick() {
-    local args=($(pick "$1" "$(ret)") )
-    vim "${args[@]}"
+    chosen_line=$(echo "$(ret)" | sed -n "${1}p" |sed 's/\x1b\[[0-9;]*m//g')
+
+    local rest=$(echo "$chosen_line" | sed 's/^[0-9]\+[[:space:]]\+//')
+    local file_name=$(echo "$rest" | cut -d: -f1)
+    local line_number=$(echo "$rest" | cut -d: -f2)
+
+    vim +"$line_number" "$file_name"
 }
 
 dgrep() {
-    cgrep "$@" | cap
+      rg --color=always -n "$@" | awk -v OFS='\t' '{print NR, $0}' | cap
+}
+
+crg() {
+    if [ -z "$1" ]; then
+        echo "Usage: crg <pattern> [additional rg options]"
+        return 1
+    fi
+
+    rg --color=always --line-number --no-heading "$@" \
+    | fzf --ansi --delimiter : \
+          --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
+          --preview-window=right:40% \
+    | awk -F: '{print $1, $2}'
+}
+
+dgrep_fzf() {
+    local result
+    result=$(crg "$@")
+    if [ -z "$result" ]; then
+        echo "No match selected"
+        return 1
+    fi
+
+    local file=$(echo "$result" | awk '{print $1}')
+    local line=$(echo "$result" | awk '{print $2}')
+    vim +"$line" "$file"
 }
 
 #######################################################
@@ -294,3 +326,4 @@ function y() {
     rm -f -- "$tmp"
 }
 
+export STM32_PRG_PATH=/home/dnl/Documents/git/wearable_bruxism/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin

@@ -6,6 +6,7 @@
     editor = vim
     autocrlf = input
     excludesfile = ~/.gitignore
+    pager=delta
 [push]
     default = simple
     autoSetupMerge = true
@@ -38,3 +39,21 @@
     prune = true
     pruneTags = true
     all = true
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+[delta]
+    features = side-by-side,syntax-highlight,decorations
+    syntax-theme = "Monokai Extended"
+    navigate = true
+    whitespace = ignore-all
+    commit-decoration-style = "bold yellow"
+    commit-style = "bold yellow"
+    hunk-header-style = "bold blue"
+    hunk-header-decoration-style = "bold blue"
+    side-by-side=true
+    line-numbers = true
+[merge]
+    conflictstyle = diff3
+    tool = vimdiff
+
+
