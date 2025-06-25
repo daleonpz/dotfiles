@@ -6,8 +6,15 @@
 cscope.*
 tags
 
+# python
+.python_history
+
+# gdb
+.gdb_history
+
 # kicad
 *.lck
 fp-lib-table
 fp-info-cache
 sym-lib-table
+*.kicad_prl

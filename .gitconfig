@@ -2,6 +2,10 @@
     cm = commit -m
     s = status
     ss = status -s
+    co = checkout
+    cob = checkout -b
+    ps = push
+    pl = pull
 [core]
     editor = vim
     autocrlf = input
