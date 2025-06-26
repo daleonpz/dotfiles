@@ -27,6 +27,7 @@ export HISTCONTROL=ignoreboth
 export EDITOR=vim
 export VISUAL=vim
 export SUDO_EDITOR=/usr/bin/vim
+export PATH=/opt/SEGGER/JLink:$PATH
 export PATH=/usr/local/bin:$PATH
 export CPATH=/usr/local/include:$CPATH
 export LIBRARY_PATH=/usr/local/lib:$LIBRARY_PATH
@@ -50,15 +51,6 @@ alias df='df -h'                          # human-readable sizes
 alias free='free -m'                      # show sizes in MB
 alias np='nano PKGBUILD'
 alias fehslides='feh -r -F -V -d -Z'
-
-alias gss='git status'
-alias gco='git checkout'
-alias gcb='git checkout -b'
-alias gcm='git commit -m'
-alias gps='git push'
-alias gpl='git pull'
-alias ga='git add'
-alias gdiff='git diff'
 
 #########################################################3
 # Prompt
