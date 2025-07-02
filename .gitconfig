@@ -6,6 +6,7 @@
     cob = checkout -b
     ps = push
     pl = pull
+    lh = log -1 --format=%H
 [core]
     editor = vim
     autocrlf = input

@@ -44,6 +44,7 @@ alias ctagsbuild='ctags -R .'
 alias ll='eza -l --icons'
 alias la='eza -la --icons'
 alias ls='eza --icons --group-directories-first --color=always'
+alias cat='bat'
 alias tree='eza --tree -la --icons'
 alias grep='grep --color=tty -d skip'
 alias cp="cp -i"                          # confirm before overwriting something
