@@ -103,6 +103,9 @@ noremap <silent> ,cu :<C-B>silent <C-E>s/^\V<C-R>=escape(b:comment_leader,'\/')<
 noremap <A-Left>  :-tabmove<cr>
 noremap <A-Right> :+tabmove<cr>
 
+" Use dosini syntax highlighting with robot files
+au BufRead,BufNewFile *.robot set filetype=dosini
+
 " Switch to hex-editor`
 noremap <F7> :%!xxd<CR> 
 " Switch back 
