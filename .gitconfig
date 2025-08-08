@@ -27,6 +27,7 @@
 [user]
     email = daleonpz@gmail.com
     name = dnl
+    signingkey = /home/dnl/.ssh/id_ed25519.pub
 [safe]
     directory = *
 [branch]
@@ -40,6 +41,7 @@
     renames = true
 [commit]
     verbose = true
+    gpgSign = true
 [fetch]
     prune = true
     pruneTags = true
@@ -62,3 +64,7 @@
     tool = vimdiff
 
 
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	allowedSignersFile = /home/dnl/.ssh/allowed_signers
