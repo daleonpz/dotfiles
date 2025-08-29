@@ -229,17 +229,24 @@ dgrep() {
       rg --color=always -n "$@" | awk -v OFS='\t' '{print NR, $0}' | cap
 }
 
-crg() {
-    if [ -z "$1" ]; then
-        echo "Usage: crg <pattern> [additional rg options]"
-        return 1
+crg() { 
+    if [ -z "$1" ]; then 
+        echo "Usage: crg <pattern> [additional rg options]" 
+        return 1 
     fi
 
     rg --color=always --line-number --no-heading "$@" \
-    | fzf --ansi --delimiter : \
-          --preview 'bat --style=numbers --color=always --highlight-line {2} {1}' \
-          --preview-window=right:40% \
-    | awk -F: '{print $1, $2}'
+        | fzf --ansi --delimiter : \
+        --preview '
+            bash -c "
+                line={2};
+                file={1};
+                start=\$(( line-20<1 ? 1 : line-20 ));
+                bat --style=numbers \
+                    --color=always \
+                    --highlight-line \$line --line-range \$start: \$file"' \
+        --preview-window=right:60% \
+        | awk -F: '{print $1, $2}'
 }
 
 dgrep_fzf() {
