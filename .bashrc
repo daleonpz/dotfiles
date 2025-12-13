@@ -40,7 +40,6 @@ export PATH=$PATH:/home/dnl/.scripts/
 # alias
 #######################################################
 alias execjekyll='bundle exec jekyll serve'
-alias ctagsbuild='ctags -R .'
 alias ll='eza -l --icons'
 alias la='eza -la --icons'
 alias ls='eza --icons --group-directories-first --color=always'
@@ -186,7 +185,9 @@ browser(){
 }
 
 chrome(){
-    mullvad-exclude chromium &> /dev/null
+    # Use mullvad-exclude to run Chrome outside the VPN
+    # added flags to disable Manifest V2 extensions, because uBlock Origin stopped working otherwise
+    mullvad-exclude chromium --disable-features=ExtensionManifestV2Unsupported,ExtensionManifestV2Disabled &> /dev/null
 }
 
 mkcd () {
@@ -295,29 +296,56 @@ export SUDO_EDITOR=/usr/bin/vim
 #######################################################
 # cscope and ctags
 #######################################################
-function build_cscope_db_func()
- {
-     find $PWD -name '*.c' \
-            -o -name '*.h' \
-            -o -name '*.mk' \
-            -o -name '*.xml'\
-            -o -name '*.cfg'\
-            -o -name '*.ini'\
-            -o -name '*.dat'\
-            -o -name '*.py'\
-            -o -name '*.cpp' > $PWD/cscope.files
-  cscope -RCbk
-  export CSCOPE_DB=$PWD/cscope.out
+function tagsbuild() {
+    rm cscope.* 2> /dev/null
+    rm tags 2> /dev/null
+
+    fd -t f -a \
+      -e c -e h -e cpp -e py -e rs -e mk -e xml -e cfg -e ini \
+      . \
+      > cscope.files
+
+    echo "Building cscope database..."
+    cscope -b -q -k
+
+    echo "Building ctags..."
+    ctags --links=no  -L cscope.files \
+        --totals=yes  \
+        --fields=+l --extras=+q
+    echo "Done."
 }
 
-alias csbuild=build_cscope_db_func
+# This functions accepts a directory to append its files to the existing cscope.files
+# and rebuilds the cscope database and ctags
+function append_tags(){
+    local dir="$1"
 
-function cscope_export_db_func()
-{
-   export CSCOPE_DB=$PWD/cscope.out
+    if [ -z "$dir" ] || [ ! -d "$dir" ]; then
+        echo "Usage: append_tags <directory>"
+        return 1
+    fi
+
+    if [ ! -f cscope.files ]; then
+        echo "cscope.files does not exist. Please run tagsbuild first."
+        return 1
+    fi
+
+    fd -t f -a \
+      -e c -e h -e cpp -e py -e rs -e mk -e xml -e cfg -e ini \
+      . "$dir" \
+      >> cscope.files
+
+    # remove duplicate entries
+    sort -u -o cscope.files cscope.files
+
+    echo "Appending files from $dir to cscope.files and rebuilding cscope database..."
+    cscope -b -q -k
+    echo "Rebuilding ctags..."
+    ctags --links=no  -L cscope.files \
+        --totals=yes  \
+        --fields=+l --extras=+q
+    echo "Done."
 }
-alias csexport=cscope_export_db_func
-alias tagsbuild='csbuild && ctagsbuild'
 
 #######################################################
 # NVM
