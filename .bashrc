@@ -317,8 +317,10 @@ function tagsbuild() {
 
 # This functions accepts a directory to append its files to the existing cscope.files
 # and rebuilds the cscope database and ctags
-function append_tags(){
+function append_tags() {
     local dir="$1"
+    local new_files
+    new_files=$(mktemp)
 
     if [ -z "$dir" ] || [ ! -d "$dir" ]; then
         echo "Usage: append_tags <directory>"
@@ -326,24 +328,33 @@ function append_tags(){
     fi
 
     if [ ! -f cscope.files ]; then
-        echo "cscope.files does not exist. Please run tagsbuild first."
-        return 1
+        echo "cscope.files not found, creating a new one."
+        touch cscope.files
     fi
 
+    # Collect candidate files
     fd -t f -a \
       -e c -e h -e cpp -e py -e rs -e mk -e xml -e cfg -e ini \
       . "$dir" \
-      >> cscope.files
+      > "$new_files"
 
-    # remove duplicate entries
+    cat "${new_files}" >> cscope.files
     sort -u -o cscope.files cscope.files
 
-    echo "Appending files from $dir to cscope.files and rebuilding cscope database..."
+    echo "Rebuilding cscope database..."
     cscope -b -q -k
-    echo "Rebuilding ctags..."
-    ctags --links=no  -L cscope.files \
-        --totals=yes  \
-        --fields=+l --extras=+q
+
+    echo "Updating ctags incrementally..."
+    ctags --links=no \
+          --fields=+l --extras=+q \
+          -L "${new_files}" \
+          -f tags.new
+
+    # Merge + re-sort tags
+    cat tags.new >> tags
+    LC_ALL=C sort -u tags -o tags
+    rm -f tags.new
+    rm -f "$new_files"
     echo "Done."
 }
 
