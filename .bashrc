@@ -307,6 +307,7 @@ function tagsbuild() {
 
     echo "Building cscope database..."
     cscope -b -q -k
+    export CSCOPE_DB=$PWD/cscope.out
 
     echo "Building ctags..."
     ctags --links=no  -L cscope.files \
@@ -340,6 +341,7 @@ function append_tags() {
 
     cat "${new_files}" >> cscope.files
     sort -u -o cscope.files cscope.files
+    export CSCOPE_DB=$PWD/cscope.out
 
     echo "Rebuilding cscope database..."
     cscope -b -q -k
