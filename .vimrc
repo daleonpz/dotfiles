@@ -106,6 +106,10 @@ noremap <A-Right> :+tabmove<cr>
 " Use dosini syntax highlighting with robot files
 au BufRead,BufNewFile *.robot set filetype=dosini
 
+" Visual mode: search for selected text. Use # with a highlighted text to
+" enable search for matches. basically \ but faster, without typing the match
+vnoremap # y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " Switch to hex-editor`
 noremap <F7> :%!xxd<CR> 
 " Switch back 
