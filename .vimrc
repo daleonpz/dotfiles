@@ -132,6 +132,9 @@ vnoremap K :m '<-2<CR>gv=gv
 " Keep cursor position when joining lines
 nnoremap J mzJ`z
 
+" In split screen, open the current document in a new tab
+nnoremap <leader>e :tab split<CR>
+
 " Keep cursor centered when scrolling
 nnoremap <C-d> <C-d>zz
 nnoremap <C-u> <C-u>zz
