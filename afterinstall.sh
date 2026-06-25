@@ -73,6 +73,7 @@ cp .tmux.conf ~/.tmux.conf
 cp .gitconfig ~/.gitconfig
 cp .gitignore ~/.gitignore
 cp .minirc.dfl ~/.minirc.dfl
+cp .tigrc ~/.tigrc
 
 cd $GIT_DIR
 git clone git@github.com:daleonpz/dnl_tools.git
