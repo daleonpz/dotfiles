@@ -113,3 +113,12 @@ make install
 cd $DOTFILES_DIR
 cp .keynavrc ~/
 cp .xprofile ~/
+
+## tmux-plugins tpm
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+tmux source ~/.tmux.conf
+
+## Press Prefix(ctrl+b) + I to install plugins 
+
+## colorscheme
+# sudo cp monokai-dark.theme /usr/share/xfce4/terminal/colorschemes/
