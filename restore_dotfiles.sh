@@ -7,3 +7,4 @@ sudo \cp .inputrc  /etc/inputrc
 mkdir ~/.vifm
 \cp .vifmrc ~/.vifm/vifmrc
 \cp .gdbinit ~/.gdbinit
+
