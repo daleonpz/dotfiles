@@ -273,6 +273,8 @@ set tags=./tags,tags;/
 " tags=./tags,./TAGS,tags,TAGS
 " set cscopeprg=cscope -d
 " let g:copilot_node_command = "~/.nvm/versions/node/v20.15.0/bin/node"
+let g:copilot_ignore_node_version = v:true
+
 
 """"""""""""""""""""""""""""""""
 " UNDO PLUGIN
