@@ -45,7 +45,7 @@ alias la='eza -la --icons'
 alias ls='eza --icons --group-directories-first --color=always'
 alias cat='bat'
 alias ccat='bat -P'
-alias tree='eza --tree -la --icons'
+alias tree='eza --tree -la --icons auto'
 alias grep='grep --color=tty -d skip'
 alias cp="cp -i"                          # confirm before overwriting something
 alias df='df -h'                          # human-readable sizes
@@ -188,6 +188,10 @@ chrome(){
     # Use mullvad-exclude to run Chrome outside the VPN
     # added flags to disable Manifest V2 extensions, because uBlock Origin stopped working otherwise
     mullvad-exclude chromium --disable-features=ExtensionManifestV2Unsupported,ExtensionManifestV2Disabled &> /dev/null
+}
+
+youtube() {
+    mullvad-exclude brave &> /dev/null
 }
 
 mkcd () {
